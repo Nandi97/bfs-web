@@ -12,6 +12,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum StoreType {
+  CORPORATE
+  FRANCHISE
+}
+
 model User {
   id            String    @id
   name          String
@@ -73,4 +78,62 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model StoreLocation {
+  id                String               @id @default(cuid())
+  name              String
+  type              StoreType
+  managerName       String
+  serviceQueueLabel String
+  stockAlert        String
+  sortOrder         Int                  @default(0)
+  appointments      ServiceAppointment[]
+  tasks             OperationalTask[]
+  outgoingTransfers InventoryTransfer[]  @relation("transfer_from_location")
+  incomingTransfers InventoryTransfer[]  @relation("transfer_to_location")
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+}
+
+model ServiceAppointment {
+  id          String        @id @default(cuid())
+  storeId     String
+  windowLabel String
+  note        String
+  sortOrder   Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  store       StoreLocation @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId, sortOrder])
+}
+
+model OperationalTask {
+  id        String         @id @default(cuid())
+  title     String
+  sortOrder Int            @default(0)
+  storeId   String?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  store     StoreLocation? @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  @@index([sortOrder])
+}
+
+model InventoryTransfer {
+  id             String        @id @default(cuid())
+  sku            String
+  units          Int
+  sortOrder      Int           @default(0)
+  fromLocationId String
+  toLocationId   String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  fromLocation   StoreLocation @relation("transfer_from_location", fields: [fromLocationId], references: [id], onDelete: Restrict)
+  toLocation     StoreLocation @relation("transfer_to_location", fields: [toLocationId], references: [id], onDelete: Restrict)
+
+  @@index([sortOrder])
+  @@index([fromLocationId])
+  @@index([toLocationId])
 }

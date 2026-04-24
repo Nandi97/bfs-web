@@ -61,3 +61,23 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model StoreLocation
+ * 
+ */
+export type StoreLocation = Prisma.StoreLocationModel
+/**
+ * Model ServiceAppointment
+ * 
+ */
+export type ServiceAppointment = Prisma.ServiceAppointmentModel
+/**
+ * Model OperationalTask
+ * 
+ */
+export type OperationalTask = Prisma.OperationalTaskModel
+/**
+ * Model InventoryTransfer
+ * 
+ */
+export type InventoryTransfer = Prisma.InventoryTransferModel

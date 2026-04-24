@@ -54,7 +54,11 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  StoreLocation: 'StoreLocation',
+  ServiceAppointment: 'ServiceAppointment',
+  OperationalTask: 'OperationalTask',
+  InventoryTransfer: 'InventoryTransfer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -129,6 +133,60 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const StoreLocationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  managerName: 'managerName',
+  serviceQueueLabel: 'serviceQueueLabel',
+  stockAlert: 'stockAlert',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreLocationScalarFieldEnum = (typeof StoreLocationScalarFieldEnum)[keyof typeof StoreLocationScalarFieldEnum]
+
+
+export const ServiceAppointmentScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  windowLabel: 'windowLabel',
+  note: 'note',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceAppointmentScalarFieldEnum = (typeof ServiceAppointmentScalarFieldEnum)[keyof typeof ServiceAppointmentScalarFieldEnum]
+
+
+export const OperationalTaskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  sortOrder: 'sortOrder',
+  storeId: 'storeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OperationalTaskScalarFieldEnum = (typeof OperationalTaskScalarFieldEnum)[keyof typeof OperationalTaskScalarFieldEnum]
+
+
+export const InventoryTransferScalarFieldEnum = {
+  id: 'id',
+  sku: 'sku',
+  units: 'units',
+  sortOrder: 'sortOrder',
+  fromLocationId: 'fromLocationId',
+  toLocationId: 'toLocationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InventoryTransferScalarFieldEnum = (typeof InventoryTransferScalarFieldEnum)[keyof typeof InventoryTransferScalarFieldEnum]
 
 
 export const SortOrder = {
