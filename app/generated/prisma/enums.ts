@@ -10,8 +10,17 @@
 */
 
 export const StoreType = {
+  HEAD_OFFICE: 'HEAD_OFFICE',
   CORPORATE: 'CORPORATE',
   FRANCHISE: 'FRANCHISE'
 } as const
 
 export type StoreType = (typeof StoreType)[keyof typeof StoreType]
+
+
+export const CommissionType = {
+  FLAT: 'FLAT',
+  PERCENTAGE: 'PERCENTAGE'
+} as const
+
+export type CommissionType = (typeof CommissionType)[keyof typeof CommissionType]

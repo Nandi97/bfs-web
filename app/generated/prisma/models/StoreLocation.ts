@@ -38,7 +38,7 @@ export type StoreLocationMinAggregateOutputType = {
   id: string | null
   name: string | null
   type: $Enums.StoreType | null
-  managerName: string | null
+  address: string | null
   serviceQueueLabel: string | null
   stockAlert: string | null
   sortOrder: number | null
@@ -50,7 +50,7 @@ export type StoreLocationMaxAggregateOutputType = {
   id: string | null
   name: string | null
   type: $Enums.StoreType | null
-  managerName: string | null
+  address: string | null
   serviceQueueLabel: string | null
   stockAlert: string | null
   sortOrder: number | null
@@ -62,7 +62,7 @@ export type StoreLocationCountAggregateOutputType = {
   id: number
   name: number
   type: number
-  managerName: number
+  address: number
   serviceQueueLabel: number
   stockAlert: number
   sortOrder: number
@@ -84,7 +84,7 @@ export type StoreLocationMinAggregateInputType = {
   id?: true
   name?: true
   type?: true
-  managerName?: true
+  address?: true
   serviceQueueLabel?: true
   stockAlert?: true
   sortOrder?: true
@@ -96,7 +96,7 @@ export type StoreLocationMaxAggregateInputType = {
   id?: true
   name?: true
   type?: true
-  managerName?: true
+  address?: true
   serviceQueueLabel?: true
   stockAlert?: true
   sortOrder?: true
@@ -108,7 +108,7 @@ export type StoreLocationCountAggregateInputType = {
   id?: true
   name?: true
   type?: true
-  managerName?: true
+  address?: true
   serviceQueueLabel?: true
   stockAlert?: true
   sortOrder?: true
@@ -207,9 +207,9 @@ export type StoreLocationGroupByOutputType = {
   id: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address: string | null
+  serviceQueueLabel: string | null
+  stockAlert: string | null
   sortOrder: number
   createdAt: Date
   updatedAt: Date
@@ -242,9 +242,9 @@ export type StoreLocationWhereInput = {
   id?: Prisma.StringFilter<"StoreLocation"> | string
   name?: Prisma.StringFilter<"StoreLocation"> | string
   type?: Prisma.EnumStoreTypeFilter<"StoreLocation"> | $Enums.StoreType
-  managerName?: Prisma.StringFilter<"StoreLocation"> | string
-  serviceQueueLabel?: Prisma.StringFilter<"StoreLocation"> | string
-  stockAlert?: Prisma.StringFilter<"StoreLocation"> | string
+  address?: Prisma.StringNullableFilter<"StoreLocation"> | string | null
+  serviceQueueLabel?: Prisma.StringNullableFilter<"StoreLocation"> | string | null
+  stockAlert?: Prisma.StringNullableFilter<"StoreLocation"> | string | null
   sortOrder?: Prisma.IntFilter<"StoreLocation"> | number
   createdAt?: Prisma.DateTimeFilter<"StoreLocation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreLocation"> | Date | string
@@ -252,15 +252,17 @@ export type StoreLocationWhereInput = {
   tasks?: Prisma.OperationalTaskListRelationFilter
   outgoingTransfers?: Prisma.InventoryTransferListRelationFilter
   incomingTransfers?: Prisma.InventoryTransferListRelationFilter
+  staffAssignments?: Prisma.StaffAssignmentListRelationFilter
+  stockLevels?: Prisma.StockLevelListRelationFilter
 }
 
 export type StoreLocationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
-  serviceQueueLabel?: Prisma.SortOrder
-  stockAlert?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceQueueLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  stockAlert?: Prisma.SortOrderInput | Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -268,6 +270,8 @@ export type StoreLocationOrderByWithRelationInput = {
   tasks?: Prisma.OperationalTaskOrderByRelationAggregateInput
   outgoingTransfers?: Prisma.InventoryTransferOrderByRelationAggregateInput
   incomingTransfers?: Prisma.InventoryTransferOrderByRelationAggregateInput
+  staffAssignments?: Prisma.StaffAssignmentOrderByRelationAggregateInput
+  stockLevels?: Prisma.StockLevelOrderByRelationAggregateInput
 }
 
 export type StoreLocationWhereUniqueInput = Prisma.AtLeast<{
@@ -277,9 +281,9 @@ export type StoreLocationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.StoreLocationWhereInput | Prisma.StoreLocationWhereInput[]
   name?: Prisma.StringFilter<"StoreLocation"> | string
   type?: Prisma.EnumStoreTypeFilter<"StoreLocation"> | $Enums.StoreType
-  managerName?: Prisma.StringFilter<"StoreLocation"> | string
-  serviceQueueLabel?: Prisma.StringFilter<"StoreLocation"> | string
-  stockAlert?: Prisma.StringFilter<"StoreLocation"> | string
+  address?: Prisma.StringNullableFilter<"StoreLocation"> | string | null
+  serviceQueueLabel?: Prisma.StringNullableFilter<"StoreLocation"> | string | null
+  stockAlert?: Prisma.StringNullableFilter<"StoreLocation"> | string | null
   sortOrder?: Prisma.IntFilter<"StoreLocation"> | number
   createdAt?: Prisma.DateTimeFilter<"StoreLocation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreLocation"> | Date | string
@@ -287,15 +291,17 @@ export type StoreLocationWhereUniqueInput = Prisma.AtLeast<{
   tasks?: Prisma.OperationalTaskListRelationFilter
   outgoingTransfers?: Prisma.InventoryTransferListRelationFilter
   incomingTransfers?: Prisma.InventoryTransferListRelationFilter
+  staffAssignments?: Prisma.StaffAssignmentListRelationFilter
+  stockLevels?: Prisma.StockLevelListRelationFilter
 }, "id">
 
 export type StoreLocationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
-  serviceQueueLabel?: Prisma.SortOrder
-  stockAlert?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceQueueLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  stockAlert?: Prisma.SortOrderInput | Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -313,9 +319,9 @@ export type StoreLocationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"StoreLocation"> | string
   name?: Prisma.StringWithAggregatesFilter<"StoreLocation"> | string
   type?: Prisma.EnumStoreTypeWithAggregatesFilter<"StoreLocation"> | $Enums.StoreType
-  managerName?: Prisma.StringWithAggregatesFilter<"StoreLocation"> | string
-  serviceQueueLabel?: Prisma.StringWithAggregatesFilter<"StoreLocation"> | string
-  stockAlert?: Prisma.StringWithAggregatesFilter<"StoreLocation"> | string
+  address?: Prisma.StringNullableWithAggregatesFilter<"StoreLocation"> | string | null
+  serviceQueueLabel?: Prisma.StringNullableWithAggregatesFilter<"StoreLocation"> | string | null
+  stockAlert?: Prisma.StringNullableWithAggregatesFilter<"StoreLocation"> | string | null
   sortOrder?: Prisma.IntWithAggregatesFilter<"StoreLocation"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StoreLocation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StoreLocation"> | Date | string
@@ -325,9 +331,9 @@ export type StoreLocationCreateInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -335,15 +341,17 @@ export type StoreLocationCreateInput = {
   tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -351,15 +359,17 @@ export type StoreLocationUncheckedCreateInput = {
   tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -367,15 +377,17 @@ export type StoreLocationUpdateInput = {
   tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,15 +395,17 @@ export type StoreLocationUncheckedUpdateInput = {
   tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateManyInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -401,9 +415,9 @@ export type StoreLocationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -413,9 +427,9 @@ export type StoreLocationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -425,7 +439,7 @@ export type StoreLocationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   serviceQueueLabel?: Prisma.SortOrder
   stockAlert?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -441,7 +455,7 @@ export type StoreLocationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   serviceQueueLabel?: Prisma.SortOrder
   stockAlert?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -453,7 +467,7 @@ export type StoreLocationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   serviceQueueLabel?: Prisma.SortOrder
   stockAlert?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -485,6 +499,34 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type StoreLocationCreateNestedOneWithoutStaffAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.StoreLocationCreateWithoutStaffAssignmentsInput, Prisma.StoreLocationUncheckedCreateWithoutStaffAssignmentsInput>
+  connectOrCreate?: Prisma.StoreLocationCreateOrConnectWithoutStaffAssignmentsInput
+  connect?: Prisma.StoreLocationWhereUniqueInput
+}
+
+export type StoreLocationUpdateOneRequiredWithoutStaffAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreLocationCreateWithoutStaffAssignmentsInput, Prisma.StoreLocationUncheckedCreateWithoutStaffAssignmentsInput>
+  connectOrCreate?: Prisma.StoreLocationCreateOrConnectWithoutStaffAssignmentsInput
+  upsert?: Prisma.StoreLocationUpsertWithoutStaffAssignmentsInput
+  connect?: Prisma.StoreLocationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreLocationUpdateToOneWithWhereWithoutStaffAssignmentsInput, Prisma.StoreLocationUpdateWithoutStaffAssignmentsInput>, Prisma.StoreLocationUncheckedUpdateWithoutStaffAssignmentsInput>
+}
+
+export type StoreLocationCreateNestedOneWithoutStockLevelsInput = {
+  create?: Prisma.XOR<Prisma.StoreLocationCreateWithoutStockLevelsInput, Prisma.StoreLocationUncheckedCreateWithoutStockLevelsInput>
+  connectOrCreate?: Prisma.StoreLocationCreateOrConnectWithoutStockLevelsInput
+  connect?: Prisma.StoreLocationWhereUniqueInput
+}
+
+export type StoreLocationUpdateOneRequiredWithoutStockLevelsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreLocationCreateWithoutStockLevelsInput, Prisma.StoreLocationUncheckedCreateWithoutStockLevelsInput>
+  connectOrCreate?: Prisma.StoreLocationCreateOrConnectWithoutStockLevelsInput
+  upsert?: Prisma.StoreLocationUpsertWithoutStockLevelsInput
+  connect?: Prisma.StoreLocationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreLocationUpdateToOneWithWhereWithoutStockLevelsInput, Prisma.StoreLocationUpdateWithoutStockLevelsInput>, Prisma.StoreLocationUncheckedUpdateWithoutStockLevelsInput>
 }
 
 export type StoreLocationCreateNestedOneWithoutAppointmentsInput = {
@@ -545,34 +587,206 @@ export type StoreLocationUpdateOneRequiredWithoutIncomingTransfersNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreLocationUpdateToOneWithWhereWithoutIncomingTransfersInput, Prisma.StoreLocationUpdateWithoutIncomingTransfersInput>, Prisma.StoreLocationUncheckedUpdateWithoutIncomingTransfersInput>
 }
 
+export type StoreLocationCreateWithoutStaffAssignmentsInput = {
+  id?: string
+  name: string
+  type: $Enums.StoreType
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  appointments?: Prisma.ServiceAppointmentCreateNestedManyWithoutStoreInput
+  tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
+  outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
+  incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+}
+
+export type StoreLocationUncheckedCreateWithoutStaffAssignmentsInput = {
+  id?: string
+  name: string
+  type: $Enums.StoreType
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  appointments?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutStoreInput
+  tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
+  outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
+  incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+}
+
+export type StoreLocationCreateOrConnectWithoutStaffAssignmentsInput = {
+  where: Prisma.StoreLocationWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreLocationCreateWithoutStaffAssignmentsInput, Prisma.StoreLocationUncheckedCreateWithoutStaffAssignmentsInput>
+}
+
+export type StoreLocationUpsertWithoutStaffAssignmentsInput = {
+  update: Prisma.XOR<Prisma.StoreLocationUpdateWithoutStaffAssignmentsInput, Prisma.StoreLocationUncheckedUpdateWithoutStaffAssignmentsInput>
+  create: Prisma.XOR<Prisma.StoreLocationCreateWithoutStaffAssignmentsInput, Prisma.StoreLocationUncheckedCreateWithoutStaffAssignmentsInput>
+  where?: Prisma.StoreLocationWhereInput
+}
+
+export type StoreLocationUpdateToOneWithWhereWithoutStaffAssignmentsInput = {
+  where?: Prisma.StoreLocationWhereInput
+  data: Prisma.XOR<Prisma.StoreLocationUpdateWithoutStaffAssignmentsInput, Prisma.StoreLocationUncheckedUpdateWithoutStaffAssignmentsInput>
+}
+
+export type StoreLocationUpdateWithoutStaffAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointments?: Prisma.ServiceAppointmentUpdateManyWithoutStoreNestedInput
+  tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
+  outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
+  incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+}
+
+export type StoreLocationUncheckedUpdateWithoutStaffAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointments?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutStoreNestedInput
+  tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
+  outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
+  incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+}
+
+export type StoreLocationCreateWithoutStockLevelsInput = {
+  id?: string
+  name: string
+  type: $Enums.StoreType
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  appointments?: Prisma.ServiceAppointmentCreateNestedManyWithoutStoreInput
+  tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
+  outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
+  incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+}
+
+export type StoreLocationUncheckedCreateWithoutStockLevelsInput = {
+  id?: string
+  name: string
+  type: $Enums.StoreType
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  appointments?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutStoreInput
+  tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
+  outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
+  incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+}
+
+export type StoreLocationCreateOrConnectWithoutStockLevelsInput = {
+  where: Prisma.StoreLocationWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreLocationCreateWithoutStockLevelsInput, Prisma.StoreLocationUncheckedCreateWithoutStockLevelsInput>
+}
+
+export type StoreLocationUpsertWithoutStockLevelsInput = {
+  update: Prisma.XOR<Prisma.StoreLocationUpdateWithoutStockLevelsInput, Prisma.StoreLocationUncheckedUpdateWithoutStockLevelsInput>
+  create: Prisma.XOR<Prisma.StoreLocationCreateWithoutStockLevelsInput, Prisma.StoreLocationUncheckedCreateWithoutStockLevelsInput>
+  where?: Prisma.StoreLocationWhereInput
+}
+
+export type StoreLocationUpdateToOneWithWhereWithoutStockLevelsInput = {
+  where?: Prisma.StoreLocationWhereInput
+  data: Prisma.XOR<Prisma.StoreLocationUpdateWithoutStockLevelsInput, Prisma.StoreLocationUncheckedUpdateWithoutStockLevelsInput>
+}
+
+export type StoreLocationUpdateWithoutStockLevelsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointments?: Prisma.ServiceAppointmentUpdateManyWithoutStoreNestedInput
+  tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
+  outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
+  incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+}
+
+export type StoreLocationUncheckedUpdateWithoutStockLevelsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointments?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutStoreNestedInput
+  tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
+  outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
+  incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+}
+
 export type StoreLocationCreateWithoutAppointmentsInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutAppointmentsInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutAppointmentsInput = {
@@ -595,60 +809,68 @@ export type StoreLocationUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateWithoutTasksInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.ServiceAppointmentCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutTasksInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutTasksInput = {
@@ -671,60 +893,68 @@ export type StoreLocationUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.ServiceAppointmentUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateWithoutOutgoingTransfersInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.ServiceAppointmentCreateNestedManyWithoutStoreInput
   tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutOutgoingTransfersInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutStoreInput
   tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutOutgoingTransfersInput = {
@@ -736,30 +966,34 @@ export type StoreLocationCreateWithoutIncomingTransfersInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.ServiceAppointmentCreateNestedManyWithoutStoreInput
   tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutIncomingTransfersInput = {
   id?: string
   name: string
   type: $Enums.StoreType
-  managerName: string
-  serviceQueueLabel: string
-  stockAlert: string
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutStoreInput
   tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutIncomingTransfersInput = {
@@ -782,30 +1016,34 @@ export type StoreLocationUpdateWithoutOutgoingTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.ServiceAppointmentUpdateManyWithoutStoreNestedInput
   tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutOutgoingTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutStoreNestedInput
   tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUpsertWithoutIncomingTransfersInput = {
@@ -823,30 +1061,34 @@ export type StoreLocationUpdateWithoutIncomingTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.ServiceAppointmentUpdateManyWithoutStoreNestedInput
   tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutIncomingTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
-  managerName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceQueueLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  stockAlert?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutStoreNestedInput
   tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 
@@ -859,6 +1101,8 @@ export type StoreLocationCountOutputType = {
   tasks: number
   outgoingTransfers: number
   incomingTransfers: number
+  staffAssignments: number
+  stockLevels: number
 }
 
 export type StoreLocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -866,6 +1110,8 @@ export type StoreLocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Ext
   tasks?: boolean | StoreLocationCountOutputTypeCountTasksArgs
   outgoingTransfers?: boolean | StoreLocationCountOutputTypeCountOutgoingTransfersArgs
   incomingTransfers?: boolean | StoreLocationCountOutputTypeCountIncomingTransfersArgs
+  staffAssignments?: boolean | StoreLocationCountOutputTypeCountStaffAssignmentsArgs
+  stockLevels?: boolean | StoreLocationCountOutputTypeCountStockLevelsArgs
 }
 
 /**
@@ -906,12 +1152,26 @@ export type StoreLocationCountOutputTypeCountIncomingTransfersArgs<ExtArgs exten
   where?: Prisma.InventoryTransferWhereInput
 }
 
+/**
+ * StoreLocationCountOutputType without action
+ */
+export type StoreLocationCountOutputTypeCountStaffAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StaffAssignmentWhereInput
+}
+
+/**
+ * StoreLocationCountOutputType without action
+ */
+export type StoreLocationCountOutputTypeCountStockLevelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockLevelWhereInput
+}
+
 
 export type StoreLocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   type?: boolean
-  managerName?: boolean
+  address?: boolean
   serviceQueueLabel?: boolean
   stockAlert?: boolean
   sortOrder?: boolean
@@ -921,6 +1181,8 @@ export type StoreLocationSelect<ExtArgs extends runtime.Types.Extensions.Interna
   tasks?: boolean | Prisma.StoreLocation$tasksArgs<ExtArgs>
   outgoingTransfers?: boolean | Prisma.StoreLocation$outgoingTransfersArgs<ExtArgs>
   incomingTransfers?: boolean | Prisma.StoreLocation$incomingTransfersArgs<ExtArgs>
+  staffAssignments?: boolean | Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs>
+  stockLevels?: boolean | Prisma.StoreLocation$stockLevelsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreLocationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storeLocation"]>
 
@@ -928,7 +1190,7 @@ export type StoreLocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   name?: boolean
   type?: boolean
-  managerName?: boolean
+  address?: boolean
   serviceQueueLabel?: boolean
   stockAlert?: boolean
   sortOrder?: boolean
@@ -940,7 +1202,7 @@ export type StoreLocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   name?: boolean
   type?: boolean
-  managerName?: boolean
+  address?: boolean
   serviceQueueLabel?: boolean
   stockAlert?: boolean
   sortOrder?: boolean
@@ -952,7 +1214,7 @@ export type StoreLocationSelectScalar = {
   id?: boolean
   name?: boolean
   type?: boolean
-  managerName?: boolean
+  address?: boolean
   serviceQueueLabel?: boolean
   stockAlert?: boolean
   sortOrder?: boolean
@@ -960,12 +1222,14 @@ export type StoreLocationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StoreLocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "managerName" | "serviceQueueLabel" | "stockAlert" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["storeLocation"]>
+export type StoreLocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "address" | "serviceQueueLabel" | "stockAlert" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["storeLocation"]>
 export type StoreLocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | Prisma.StoreLocation$appointmentsArgs<ExtArgs>
   tasks?: boolean | Prisma.StoreLocation$tasksArgs<ExtArgs>
   outgoingTransfers?: boolean | Prisma.StoreLocation$outgoingTransfersArgs<ExtArgs>
   incomingTransfers?: boolean | Prisma.StoreLocation$incomingTransfersArgs<ExtArgs>
+  staffAssignments?: boolean | Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs>
+  stockLevels?: boolean | Prisma.StoreLocation$stockLevelsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreLocationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreLocationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -978,14 +1242,16 @@ export type $StoreLocationPayload<ExtArgs extends runtime.Types.Extensions.Inter
     tasks: Prisma.$OperationalTaskPayload<ExtArgs>[]
     outgoingTransfers: Prisma.$InventoryTransferPayload<ExtArgs>[]
     incomingTransfers: Prisma.$InventoryTransferPayload<ExtArgs>[]
+    staffAssignments: Prisma.$StaffAssignmentPayload<ExtArgs>[]
+    stockLevels: Prisma.$StockLevelPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     type: $Enums.StoreType
-    managerName: string
-    serviceQueueLabel: string
-    stockAlert: string
+    address: string | null
+    serviceQueueLabel: string | null
+    stockAlert: string | null
     sortOrder: number
     createdAt: Date
     updatedAt: Date
@@ -1387,6 +1653,8 @@ export interface Prisma__StoreLocationClient<T, Null = never, ExtArgs extends ru
   tasks<T extends Prisma.StoreLocation$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OperationalTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   outgoingTransfers<T extends Prisma.StoreLocation$outgoingTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$outgoingTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   incomingTransfers<T extends Prisma.StoreLocation$incomingTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$incomingTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  staffAssignments<T extends Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stockLevels<T extends Prisma.StoreLocation$stockLevelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$stockLevelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockLevelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1419,7 +1687,7 @@ export interface StoreLocationFieldRefs {
   readonly id: Prisma.FieldRef<"StoreLocation", 'String'>
   readonly name: Prisma.FieldRef<"StoreLocation", 'String'>
   readonly type: Prisma.FieldRef<"StoreLocation", 'StoreType'>
-  readonly managerName: Prisma.FieldRef<"StoreLocation", 'String'>
+  readonly address: Prisma.FieldRef<"StoreLocation", 'String'>
   readonly serviceQueueLabel: Prisma.FieldRef<"StoreLocation", 'String'>
   readonly stockAlert: Prisma.FieldRef<"StoreLocation", 'String'>
   readonly sortOrder: Prisma.FieldRef<"StoreLocation", 'Int'>
@@ -1911,6 +2179,54 @@ export type StoreLocation$incomingTransfersArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.InventoryTransferScalarFieldEnum | Prisma.InventoryTransferScalarFieldEnum[]
+}
+
+/**
+ * StoreLocation.staffAssignments
+ */
+export type StoreLocation$staffAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StaffAssignment
+   */
+  select?: Prisma.StaffAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StaffAssignment
+   */
+  omit?: Prisma.StaffAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StaffAssignmentInclude<ExtArgs> | null
+  where?: Prisma.StaffAssignmentWhereInput
+  orderBy?: Prisma.StaffAssignmentOrderByWithRelationInput | Prisma.StaffAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.StaffAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StaffAssignmentScalarFieldEnum | Prisma.StaffAssignmentScalarFieldEnum[]
+}
+
+/**
+ * StoreLocation.stockLevels
+ */
+export type StoreLocation$stockLevelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockLevel
+   */
+  select?: Prisma.StockLevelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockLevel
+   */
+  omit?: Prisma.StockLevelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockLevelInclude<ExtArgs> | null
+  where?: Prisma.StockLevelWhereInput
+  orderBy?: Prisma.StockLevelOrderByWithRelationInput | Prisma.StockLevelOrderByWithRelationInput[]
+  cursor?: Prisma.StockLevelWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockLevelScalarFieldEnum | Prisma.StockLevelScalarFieldEnum[]
 }
 
 /**

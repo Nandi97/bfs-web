@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../app/generated/prisma"
@@ -12,21 +10,32 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
 enum StoreType {
+  HEAD_OFFICE
   CORPORATE
   FRANCHISE
 }
 
+enum CommissionType {
+  FLAT
+  PERCENTAGE
+}
+
+// ─── Auth models (Better Auth — do not rename columns) ────────────────────────
+
 model User {
-  id            String    @id
+  id            String       @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean      @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   sessions      Session[]
   accounts      Account[]
+  staffProfile  StaffMember?
 
   @@unique([email])
   @@map("user")
@@ -80,21 +89,166 @@ model Verification {
   @@map("verification")
 }
 
+// ─── Locations ────────────────────────────────────────────────────────────────
+
 model StoreLocation {
   id                String               @id @default(cuid())
   name              String
   type              StoreType
-  managerName       String
-  serviceQueueLabel String
-  stockAlert        String
+  address           String?
+  serviceQueueLabel String?
+  stockAlert        String?
   sortOrder         Int                  @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
   appointments      ServiceAppointment[]
   tasks             OperationalTask[]
   outgoingTransfers InventoryTransfer[]  @relation("transfer_from_location")
   incomingTransfers InventoryTransfer[]  @relation("transfer_to_location")
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
+  staffAssignments  StaffAssignment[]
+  stockLevels       StockLevel[]
 }
+
+// ─── Staff ────────────────────────────────────────────────────────────────────
+
+model Department {
+  id        String            @id @default(cuid())
+  name      String            @unique
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  staff     StaffDepartment[]
+}
+
+// Explicit join: one person can belong to multiple departments
+model StaffDepartment {
+  staffMemberId String
+  departmentId  String
+  staff         StaffMember @relation(fields: [staffMemberId], references: [id], onDelete: Cascade)
+  department    Department  @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+
+  @@id([staffMemberId, departmentId])
+}
+
+model Role {
+  id          String            @id @default(cuid())
+  name        String            @unique
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  assignments StaffAssignment[]
+}
+
+model StaffMember {
+  id                 String            @id @default(cuid())
+  name               String
+  email              String?           @unique
+  phone              String?
+  // true = franchise-managed; visible but not hired/fired by us
+  isFranchiseManaged Boolean           @default(false)
+  userId             String?           @unique
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  user               User?             @relation(fields: [userId], references: [id])
+  departments        StaffDepartment[]
+  assignments        StaffAssignment[]
+}
+
+model StaffAssignment {
+  id            String        @id @default(cuid())
+  staffMemberId String
+  locationId    String
+  roleId        String
+  // true = primary/home location for people who span multiple sites
+  isPrimary     Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  staff         StaffMember   @relation(fields: [staffMemberId], references: [id], onDelete: Cascade)
+  location      StoreLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  role          Role          @relation(fields: [roleId], references: [id])
+
+  @@unique([staffMemberId, locationId, roleId])
+  @@index([locationId])
+  @@index([roleId])
+}
+
+// ─── Products ─────────────────────────────────────────────────────────────────
+
+// Controlled list of units of measure — prevents free-text drift across products,
+// stock levels, and any future model that tracks quantities.
+model Unit {
+  id           String    @id @default(cuid())
+  name         String    @unique // "Bottle", "Cartridge", "Tube" — full display name
+  abbreviation String    @unique // "btl", "crt", "tube" — compact table/label display
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  products     Product[]
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  productCode String  @unique
+  image       String?
+  brand       String?
+
+  // Classification
+  category     String?
+  subCategory  String?
+  businessUnit String?
+  description  String?
+  // Rich text for Shopify / website listings
+  htmlDescription String?
+
+  // Date-based availability restrictions.
+  // cannotOrderFrom / cannotSellFrom share a single end date (restrictionEndsAt).
+  // Leave all three null when there is no active restriction.
+  cannotOrderFrom   DateTime?
+  cannotSellFrom    DateTime?
+  restrictionEndsAt DateTime?
+
+  // Pricing
+  amount Decimal? @db.Decimal(10, 2) // cost / purchase price
+  unitId String?
+  unit   Unit?    @relation(fields: [unitId], references: [id])
+  msrp   Decimal? @db.Decimal(10, 2) // manufacturer suggested retail price
+
+  // Product type flags (not mutually exclusive — a serum can be consumable AND retail)
+  isKit        Boolean @default(false) // bundle of other products
+  isConsumable Boolean @default(false) // used in service delivery
+  isRetail     Boolean @default(false) // sold directly to customers (in-store or online)
+
+  // Commission
+  hasCommission        Boolean        @default(false)
+  commissionAdjustment Decimal?       @db.Decimal(10, 4)
+  commissionType       CommissionType?
+
+  tags      String[] // free-form labels; stored as a PostgreSQL text array
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stockLevels StockLevel[]
+  transfers   InventoryTransfer[]
+}
+
+// Quantity of a product at a specific location (retail + consumable stock combined).
+// Use isConsumable / isRetail on the Product to split them in queries if needed.
+model StockLevel {
+  id         String   @id @default(cuid())
+  productId  String
+  locationId String
+  quantity   Int      @default(0)
+  // Raise a reorder alert when quantity drops to or below this threshold
+  reorderAt  Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  product  Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  location StoreLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locationId])
+  @@index([locationId])
+}
+
+// ─── Operations ───────────────────────────────────────────────────────────────
 
 model ServiceAppointment {
   id          String        @id @default(cuid())
@@ -123,17 +277,19 @@ model OperationalTask {
 
 model InventoryTransfer {
   id             String        @id @default(cuid())
-  sku            String
+  productId      String
   units          Int
   sortOrder      Int           @default(0)
   fromLocationId String
   toLocationId   String
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+  product        Product       @relation(fields: [productId], references: [id], onDelete: Restrict)
   fromLocation   StoreLocation @relation("transfer_from_location", fields: [fromLocationId], references: [id], onDelete: Restrict)
   toLocation     StoreLocation @relation("transfer_to_location", fields: [toLocationId], references: [id], onDelete: Restrict)
 
   @@index([sortOrder])
+  @@index([productId])
   @@index([fromLocationId])
   @@index([toLocationId])
 }

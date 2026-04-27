@@ -38,7 +38,7 @@ export type InventoryTransferSumAggregateOutputType = {
 
 export type InventoryTransferMinAggregateOutputType = {
   id: string | null
-  sku: string | null
+  productId: string | null
   units: number | null
   sortOrder: number | null
   fromLocationId: string | null
@@ -49,7 +49,7 @@ export type InventoryTransferMinAggregateOutputType = {
 
 export type InventoryTransferMaxAggregateOutputType = {
   id: string | null
-  sku: string | null
+  productId: string | null
   units: number | null
   sortOrder: number | null
   fromLocationId: string | null
@@ -60,7 +60,7 @@ export type InventoryTransferMaxAggregateOutputType = {
 
 export type InventoryTransferCountAggregateOutputType = {
   id: number
-  sku: number
+  productId: number
   units: number
   sortOrder: number
   fromLocationId: number
@@ -83,7 +83,7 @@ export type InventoryTransferSumAggregateInputType = {
 
 export type InventoryTransferMinAggregateInputType = {
   id?: true
-  sku?: true
+  productId?: true
   units?: true
   sortOrder?: true
   fromLocationId?: true
@@ -94,7 +94,7 @@ export type InventoryTransferMinAggregateInputType = {
 
 export type InventoryTransferMaxAggregateInputType = {
   id?: true
-  sku?: true
+  productId?: true
   units?: true
   sortOrder?: true
   fromLocationId?: true
@@ -105,7 +105,7 @@ export type InventoryTransferMaxAggregateInputType = {
 
 export type InventoryTransferCountAggregateInputType = {
   id?: true
-  sku?: true
+  productId?: true
   units?: true
   sortOrder?: true
   fromLocationId?: true
@@ -203,7 +203,7 @@ export type InventoryTransferGroupByArgs<ExtArgs extends runtime.Types.Extension
 
 export type InventoryTransferGroupByOutputType = {
   id: string
-  sku: string
+  productId: string
   units: number
   sortOrder: number
   fromLocationId: string
@@ -237,26 +237,28 @@ export type InventoryTransferWhereInput = {
   OR?: Prisma.InventoryTransferWhereInput[]
   NOT?: Prisma.InventoryTransferWhereInput | Prisma.InventoryTransferWhereInput[]
   id?: Prisma.StringFilter<"InventoryTransfer"> | string
-  sku?: Prisma.StringFilter<"InventoryTransfer"> | string
+  productId?: Prisma.StringFilter<"InventoryTransfer"> | string
   units?: Prisma.IntFilter<"InventoryTransfer"> | number
   sortOrder?: Prisma.IntFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   toLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryTransfer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryTransfer"> | Date | string
+  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   fromLocation?: Prisma.XOR<Prisma.StoreLocationScalarRelationFilter, Prisma.StoreLocationWhereInput>
   toLocation?: Prisma.XOR<Prisma.StoreLocationScalarRelationFilter, Prisma.StoreLocationWhereInput>
 }
 
 export type InventoryTransferOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  sku?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
   toLocationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  product?: Prisma.ProductOrderByWithRelationInput
   fromLocation?: Prisma.StoreLocationOrderByWithRelationInput
   toLocation?: Prisma.StoreLocationOrderByWithRelationInput
 }
@@ -266,20 +268,21 @@ export type InventoryTransferWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InventoryTransferWhereInput | Prisma.InventoryTransferWhereInput[]
   OR?: Prisma.InventoryTransferWhereInput[]
   NOT?: Prisma.InventoryTransferWhereInput | Prisma.InventoryTransferWhereInput[]
-  sku?: Prisma.StringFilter<"InventoryTransfer"> | string
+  productId?: Prisma.StringFilter<"InventoryTransfer"> | string
   units?: Prisma.IntFilter<"InventoryTransfer"> | number
   sortOrder?: Prisma.IntFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   toLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryTransfer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryTransfer"> | Date | string
+  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   fromLocation?: Prisma.XOR<Prisma.StoreLocationScalarRelationFilter, Prisma.StoreLocationWhereInput>
   toLocation?: Prisma.XOR<Prisma.StoreLocationScalarRelationFilter, Prisma.StoreLocationWhereInput>
 }, "id">
 
 export type InventoryTransferOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  sku?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
@@ -298,7 +301,7 @@ export type InventoryTransferScalarWhereWithAggregatesInput = {
   OR?: Prisma.InventoryTransferScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InventoryTransferScalarWhereWithAggregatesInput | Prisma.InventoryTransferScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
-  sku?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
+  productId?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
   units?: Prisma.IntWithAggregatesFilter<"InventoryTransfer"> | number
   sortOrder?: Prisma.IntWithAggregatesFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
@@ -309,18 +312,18 @@ export type InventoryTransferScalarWhereWithAggregatesInput = {
 
 export type InventoryTransferCreateInput = {
   id?: string
-  sku: string
   units: number
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  product: Prisma.ProductCreateNestedOneWithoutTransfersInput
   fromLocation: Prisma.StoreLocationCreateNestedOneWithoutOutgoingTransfersInput
   toLocation: Prisma.StoreLocationCreateNestedOneWithoutIncomingTransfersInput
 }
 
 export type InventoryTransferUncheckedCreateInput = {
   id?: string
-  sku: string
+  productId: string
   units: number
   sortOrder?: number
   fromLocationId: string
@@ -331,18 +334,18 @@ export type InventoryTransferUncheckedCreateInput = {
 
 export type InventoryTransferUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  product?: Prisma.ProductUpdateOneRequiredWithoutTransfersNestedInput
   fromLocation?: Prisma.StoreLocationUpdateOneRequiredWithoutOutgoingTransfersNestedInput
   toLocation?: Prisma.StoreLocationUpdateOneRequiredWithoutIncomingTransfersNestedInput
 }
 
 export type InventoryTransferUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -353,7 +356,7 @@ export type InventoryTransferUncheckedUpdateInput = {
 
 export type InventoryTransferCreateManyInput = {
   id?: string
-  sku: string
+  productId: string
   units: number
   sortOrder?: number
   fromLocationId: string
@@ -364,7 +367,6 @@ export type InventoryTransferCreateManyInput = {
 
 export type InventoryTransferUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -373,7 +375,7 @@ export type InventoryTransferUpdateManyMutationInput = {
 
 export type InventoryTransferUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -394,7 +396,7 @@ export type InventoryTransferOrderByRelationAggregateInput = {
 
 export type InventoryTransferCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  sku?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
@@ -410,7 +412,7 @@ export type InventoryTransferAvgOrderByAggregateInput = {
 
 export type InventoryTransferMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  sku?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
@@ -421,7 +423,7 @@ export type InventoryTransferMaxOrderByAggregateInput = {
 
 export type InventoryTransferMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  sku?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
@@ -519,19 +521,61 @@ export type InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput = {
   deleteMany?: Prisma.InventoryTransferScalarWhereInput | Prisma.InventoryTransferScalarWhereInput[]
 }
 
+export type InventoryTransferCreateNestedManyWithoutProductInput = {
+  create?: Prisma.XOR<Prisma.InventoryTransferCreateWithoutProductInput, Prisma.InventoryTransferUncheckedCreateWithoutProductInput> | Prisma.InventoryTransferCreateWithoutProductInput[] | Prisma.InventoryTransferUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.InventoryTransferCreateOrConnectWithoutProductInput | Prisma.InventoryTransferCreateOrConnectWithoutProductInput[]
+  createMany?: Prisma.InventoryTransferCreateManyProductInputEnvelope
+  connect?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+}
+
+export type InventoryTransferUncheckedCreateNestedManyWithoutProductInput = {
+  create?: Prisma.XOR<Prisma.InventoryTransferCreateWithoutProductInput, Prisma.InventoryTransferUncheckedCreateWithoutProductInput> | Prisma.InventoryTransferCreateWithoutProductInput[] | Prisma.InventoryTransferUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.InventoryTransferCreateOrConnectWithoutProductInput | Prisma.InventoryTransferCreateOrConnectWithoutProductInput[]
+  createMany?: Prisma.InventoryTransferCreateManyProductInputEnvelope
+  connect?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+}
+
+export type InventoryTransferUpdateManyWithoutProductNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryTransferCreateWithoutProductInput, Prisma.InventoryTransferUncheckedCreateWithoutProductInput> | Prisma.InventoryTransferCreateWithoutProductInput[] | Prisma.InventoryTransferUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.InventoryTransferCreateOrConnectWithoutProductInput | Prisma.InventoryTransferCreateOrConnectWithoutProductInput[]
+  upsert?: Prisma.InventoryTransferUpsertWithWhereUniqueWithoutProductInput | Prisma.InventoryTransferUpsertWithWhereUniqueWithoutProductInput[]
+  createMany?: Prisma.InventoryTransferCreateManyProductInputEnvelope
+  set?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  disconnect?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  delete?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  connect?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  update?: Prisma.InventoryTransferUpdateWithWhereUniqueWithoutProductInput | Prisma.InventoryTransferUpdateWithWhereUniqueWithoutProductInput[]
+  updateMany?: Prisma.InventoryTransferUpdateManyWithWhereWithoutProductInput | Prisma.InventoryTransferUpdateManyWithWhereWithoutProductInput[]
+  deleteMany?: Prisma.InventoryTransferScalarWhereInput | Prisma.InventoryTransferScalarWhereInput[]
+}
+
+export type InventoryTransferUncheckedUpdateManyWithoutProductNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryTransferCreateWithoutProductInput, Prisma.InventoryTransferUncheckedCreateWithoutProductInput> | Prisma.InventoryTransferCreateWithoutProductInput[] | Prisma.InventoryTransferUncheckedCreateWithoutProductInput[]
+  connectOrCreate?: Prisma.InventoryTransferCreateOrConnectWithoutProductInput | Prisma.InventoryTransferCreateOrConnectWithoutProductInput[]
+  upsert?: Prisma.InventoryTransferUpsertWithWhereUniqueWithoutProductInput | Prisma.InventoryTransferUpsertWithWhereUniqueWithoutProductInput[]
+  createMany?: Prisma.InventoryTransferCreateManyProductInputEnvelope
+  set?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  disconnect?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  delete?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  connect?: Prisma.InventoryTransferWhereUniqueInput | Prisma.InventoryTransferWhereUniqueInput[]
+  update?: Prisma.InventoryTransferUpdateWithWhereUniqueWithoutProductInput | Prisma.InventoryTransferUpdateWithWhereUniqueWithoutProductInput[]
+  updateMany?: Prisma.InventoryTransferUpdateManyWithWhereWithoutProductInput | Prisma.InventoryTransferUpdateManyWithWhereWithoutProductInput[]
+  deleteMany?: Prisma.InventoryTransferScalarWhereInput | Prisma.InventoryTransferScalarWhereInput[]
+}
+
 export type InventoryTransferCreateWithoutFromLocationInput = {
   id?: string
-  sku: string
   units: number
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  product: Prisma.ProductCreateNestedOneWithoutTransfersInput
   toLocation: Prisma.StoreLocationCreateNestedOneWithoutIncomingTransfersInput
 }
 
 export type InventoryTransferUncheckedCreateWithoutFromLocationInput = {
   id?: string
-  sku: string
+  productId: string
   units: number
   sortOrder?: number
   toLocationId: string
@@ -551,17 +595,17 @@ export type InventoryTransferCreateManyFromLocationInputEnvelope = {
 
 export type InventoryTransferCreateWithoutToLocationInput = {
   id?: string
-  sku: string
   units: number
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  product: Prisma.ProductCreateNestedOneWithoutTransfersInput
   fromLocation: Prisma.StoreLocationCreateNestedOneWithoutOutgoingTransfersInput
 }
 
 export type InventoryTransferUncheckedCreateWithoutToLocationInput = {
   id?: string
-  sku: string
+  productId: string
   units: number
   sortOrder?: number
   fromLocationId: string
@@ -600,7 +644,7 @@ export type InventoryTransferScalarWhereInput = {
   OR?: Prisma.InventoryTransferScalarWhereInput[]
   NOT?: Prisma.InventoryTransferScalarWhereInput | Prisma.InventoryTransferScalarWhereInput[]
   id?: Prisma.StringFilter<"InventoryTransfer"> | string
-  sku?: Prisma.StringFilter<"InventoryTransfer"> | string
+  productId?: Prisma.StringFilter<"InventoryTransfer"> | string
   units?: Prisma.IntFilter<"InventoryTransfer"> | number
   sortOrder?: Prisma.IntFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
@@ -625,9 +669,55 @@ export type InventoryTransferUpdateManyWithWhereWithoutToLocationInput = {
   data: Prisma.XOR<Prisma.InventoryTransferUpdateManyMutationInput, Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationInput>
 }
 
+export type InventoryTransferCreateWithoutProductInput = {
+  id?: string
+  units: number
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fromLocation: Prisma.StoreLocationCreateNestedOneWithoutOutgoingTransfersInput
+  toLocation: Prisma.StoreLocationCreateNestedOneWithoutIncomingTransfersInput
+}
+
+export type InventoryTransferUncheckedCreateWithoutProductInput = {
+  id?: string
+  units: number
+  sortOrder?: number
+  fromLocationId: string
+  toLocationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InventoryTransferCreateOrConnectWithoutProductInput = {
+  where: Prisma.InventoryTransferWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryTransferCreateWithoutProductInput, Prisma.InventoryTransferUncheckedCreateWithoutProductInput>
+}
+
+export type InventoryTransferCreateManyProductInputEnvelope = {
+  data: Prisma.InventoryTransferCreateManyProductInput | Prisma.InventoryTransferCreateManyProductInput[]
+  skipDuplicates?: boolean
+}
+
+export type InventoryTransferUpsertWithWhereUniqueWithoutProductInput = {
+  where: Prisma.InventoryTransferWhereUniqueInput
+  update: Prisma.XOR<Prisma.InventoryTransferUpdateWithoutProductInput, Prisma.InventoryTransferUncheckedUpdateWithoutProductInput>
+  create: Prisma.XOR<Prisma.InventoryTransferCreateWithoutProductInput, Prisma.InventoryTransferUncheckedCreateWithoutProductInput>
+}
+
+export type InventoryTransferUpdateWithWhereUniqueWithoutProductInput = {
+  where: Prisma.InventoryTransferWhereUniqueInput
+  data: Prisma.XOR<Prisma.InventoryTransferUpdateWithoutProductInput, Prisma.InventoryTransferUncheckedUpdateWithoutProductInput>
+}
+
+export type InventoryTransferUpdateManyWithWhereWithoutProductInput = {
+  where: Prisma.InventoryTransferScalarWhereInput
+  data: Prisma.XOR<Prisma.InventoryTransferUpdateManyMutationInput, Prisma.InventoryTransferUncheckedUpdateManyWithoutProductInput>
+}
+
 export type InventoryTransferCreateManyFromLocationInput = {
   id?: string
-  sku: string
+  productId: string
   units: number
   sortOrder?: number
   toLocationId: string
@@ -637,7 +727,7 @@ export type InventoryTransferCreateManyFromLocationInput = {
 
 export type InventoryTransferCreateManyToLocationInput = {
   id?: string
-  sku: string
+  productId: string
   units: number
   sortOrder?: number
   fromLocationId: string
@@ -647,17 +737,17 @@ export type InventoryTransferCreateManyToLocationInput = {
 
 export type InventoryTransferUpdateWithoutFromLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  product?: Prisma.ProductUpdateOneRequiredWithoutTransfersNestedInput
   toLocation?: Prisma.StoreLocationUpdateOneRequiredWithoutIncomingTransfersNestedInput
 }
 
 export type InventoryTransferUncheckedUpdateWithoutFromLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -667,7 +757,7 @@ export type InventoryTransferUncheckedUpdateWithoutFromLocationInput = {
 
 export type InventoryTransferUncheckedUpdateManyWithoutFromLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -677,17 +767,17 @@ export type InventoryTransferUncheckedUpdateManyWithoutFromLocationInput = {
 
 export type InventoryTransferUpdateWithoutToLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  product?: Prisma.ProductUpdateOneRequiredWithoutTransfersNestedInput
   fromLocation?: Prisma.StoreLocationUpdateOneRequiredWithoutOutgoingTransfersNestedInput
 }
 
 export type InventoryTransferUncheckedUpdateWithoutToLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -697,10 +787,50 @@ export type InventoryTransferUncheckedUpdateWithoutToLocationInput = {
 
 export type InventoryTransferUncheckedUpdateManyWithoutToLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InventoryTransferCreateManyProductInput = {
+  id?: string
+  units: number
+  sortOrder?: number
+  fromLocationId: string
+  toLocationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InventoryTransferUpdateWithoutProductInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  units?: Prisma.IntFieldUpdateOperationsInput | number
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fromLocation?: Prisma.StoreLocationUpdateOneRequiredWithoutOutgoingTransfersNestedInput
+  toLocation?: Prisma.StoreLocationUpdateOneRequiredWithoutIncomingTransfersNestedInput
+}
+
+export type InventoryTransferUncheckedUpdateWithoutProductInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  units?: Prisma.IntFieldUpdateOperationsInput | number
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
+  toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InventoryTransferUncheckedUpdateManyWithoutProductInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  units?: Prisma.IntFieldUpdateOperationsInput | number
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
+  toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -709,46 +839,49 @@ export type InventoryTransferUncheckedUpdateManyWithoutToLocationInput = {
 
 export type InventoryTransferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  sku?: boolean
+  productId?: boolean
   units?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
   toLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryTransfer"]>
 
 export type InventoryTransferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  sku?: boolean
+  productId?: boolean
   units?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
   toLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryTransfer"]>
 
 export type InventoryTransferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  sku?: boolean
+  productId?: boolean
   units?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
   toLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryTransfer"]>
 
 export type InventoryTransferSelectScalar = {
   id?: boolean
-  sku?: boolean
+  productId?: boolean
   units?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
@@ -757,16 +890,19 @@ export type InventoryTransferSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InventoryTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "units" | "sortOrder" | "fromLocationId" | "toLocationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryTransfer"]>
+export type InventoryTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "units" | "sortOrder" | "fromLocationId" | "toLocationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryTransfer"]>
 export type InventoryTransferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
   toLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
 }
 export type InventoryTransferIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
   toLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
 }
 export type InventoryTransferIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
   toLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
 }
@@ -774,12 +910,13 @@ export type InventoryTransferIncludeUpdateManyAndReturn<ExtArgs extends runtime.
 export type $InventoryTransferPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InventoryTransfer"
   objects: {
+    product: Prisma.$ProductPayload<ExtArgs>
     fromLocation: Prisma.$StoreLocationPayload<ExtArgs>
     toLocation: Prisma.$StoreLocationPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    sku: string
+    productId: string
     units: number
     sortOrder: number
     fromLocationId: string
@@ -1180,6 +1317,7 @@ readonly fields: InventoryTransferFieldRefs;
  */
 export interface Prisma__InventoryTransferClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   fromLocation<T extends Prisma.StoreLocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocationDefaultArgs<ExtArgs>>): Prisma.Prisma__StoreLocationClient<runtime.Types.Result.GetResult<Prisma.$StoreLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   toLocation<T extends Prisma.StoreLocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocationDefaultArgs<ExtArgs>>): Prisma.Prisma__StoreLocationClient<runtime.Types.Result.GetResult<Prisma.$StoreLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1212,7 +1350,7 @@ export interface Prisma__InventoryTransferClient<T, Null = never, ExtArgs extend
  */
 export interface InventoryTransferFieldRefs {
   readonly id: Prisma.FieldRef<"InventoryTransfer", 'String'>
-  readonly sku: Prisma.FieldRef<"InventoryTransfer", 'String'>
+  readonly productId: Prisma.FieldRef<"InventoryTransfer", 'String'>
   readonly units: Prisma.FieldRef<"InventoryTransfer", 'Int'>
   readonly sortOrder: Prisma.FieldRef<"InventoryTransfer", 'Int'>
   readonly fromLocationId: Prisma.FieldRef<"InventoryTransfer", 'String'>

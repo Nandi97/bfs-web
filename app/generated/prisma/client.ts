@@ -67,6 +67,46 @@ export type Verification = Prisma.VerificationModel
  */
 export type StoreLocation = Prisma.StoreLocationModel
 /**
+ * Model Department
+ * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
+ * Model StaffDepartment
+ * 
+ */
+export type StaffDepartment = Prisma.StaffDepartmentModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model StaffMember
+ * 
+ */
+export type StaffMember = Prisma.StaffMemberModel
+/**
+ * Model StaffAssignment
+ * 
+ */
+export type StaffAssignment = Prisma.StaffAssignmentModel
+/**
+ * Model Unit
+ * 
+ */
+export type Unit = Prisma.UnitModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model StockLevel
+ * 
+ */
+export type StockLevel = Prisma.StockLevelModel
+/**
  * Model ServiceAppointment
  * 
  */

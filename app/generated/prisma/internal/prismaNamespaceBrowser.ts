@@ -56,6 +56,14 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   StoreLocation: 'StoreLocation',
+  Department: 'Department',
+  StaffDepartment: 'StaffDepartment',
+  Role: 'Role',
+  StaffMember: 'StaffMember',
+  StaffAssignment: 'StaffAssignment',
+  Unit: 'Unit',
+  Product: 'Product',
+  StockLevel: 'StockLevel',
   ServiceAppointment: 'ServiceAppointment',
   OperationalTask: 'OperationalTask',
   InventoryTransfer: 'InventoryTransfer'
@@ -139,7 +147,7 @@ export const StoreLocationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
-  managerName: 'managerName',
+  address: 'address',
   serviceQueueLabel: 'serviceQueueLabel',
   stockAlert: 'stockAlert',
   sortOrder: 'sortOrder',
@@ -148,6 +156,116 @@ export const StoreLocationScalarFieldEnum = {
 } as const
 
 export type StoreLocationScalarFieldEnum = (typeof StoreLocationScalarFieldEnum)[keyof typeof StoreLocationScalarFieldEnum]
+
+
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const StaffDepartmentScalarFieldEnum = {
+  staffMemberId: 'staffMemberId',
+  departmentId: 'departmentId'
+} as const
+
+export type StaffDepartmentScalarFieldEnum = (typeof StaffDepartmentScalarFieldEnum)[keyof typeof StaffDepartmentScalarFieldEnum]
+
+
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const StaffMemberScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  isFranchiseManaged: 'isFranchiseManaged',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffMemberScalarFieldEnum = (typeof StaffMemberScalarFieldEnum)[keyof typeof StaffMemberScalarFieldEnum]
+
+
+export const StaffAssignmentScalarFieldEnum = {
+  id: 'id',
+  staffMemberId: 'staffMemberId',
+  locationId: 'locationId',
+  roleId: 'roleId',
+  isPrimary: 'isPrimary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffAssignmentScalarFieldEnum = (typeof StaffAssignmentScalarFieldEnum)[keyof typeof StaffAssignmentScalarFieldEnum]
+
+
+export const UnitScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  abbreviation: 'abbreviation',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  productCode: 'productCode',
+  image: 'image',
+  brand: 'brand',
+  category: 'category',
+  subCategory: 'subCategory',
+  businessUnit: 'businessUnit',
+  description: 'description',
+  htmlDescription: 'htmlDescription',
+  cannotOrderFrom: 'cannotOrderFrom',
+  cannotSellFrom: 'cannotSellFrom',
+  restrictionEndsAt: 'restrictionEndsAt',
+  amount: 'amount',
+  unitId: 'unitId',
+  msrp: 'msrp',
+  isKit: 'isKit',
+  isConsumable: 'isConsumable',
+  isRetail: 'isRetail',
+  hasCommission: 'hasCommission',
+  commissionAdjustment: 'commissionAdjustment',
+  commissionType: 'commissionType',
+  tags: 'tags',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const StockLevelScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  locationId: 'locationId',
+  quantity: 'quantity',
+  reorderAt: 'reorderAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StockLevelScalarFieldEnum = (typeof StockLevelScalarFieldEnum)[keyof typeof StockLevelScalarFieldEnum]
 
 
 export const ServiceAppointmentScalarFieldEnum = {
@@ -177,7 +295,7 @@ export type OperationalTaskScalarFieldEnum = (typeof OperationalTaskScalarFieldE
 
 export const InventoryTransferScalarFieldEnum = {
   id: 'id',
-  sku: 'sku',
+  productId: 'productId',
   units: 'units',
   sortOrder: 'sortOrder',
   fromLocationId: 'fromLocationId',
