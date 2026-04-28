@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import type { OrderStatus } from "@/app/generated/prisma/client";
+
+const VALID_STATUSES: OrderStatus[] = [
+  "CREATED", "UPDATED", "ORDERED", "RAISED", "DELIVERED",
+];
 
 export async function GET(
   req: Request,
@@ -7,36 +12,42 @@ export async function GET(
 ) {
   const { locationId } = await params;
   const { searchParams } = new URL(req.url);
-  const direction = searchParams.get("direction") ?? "all"; // "in" | "out" | "all"
+  const status = searchParams.get("status") ?? "all";
 
-  const transfers = await prisma.inventoryTransfer.findMany({
+  // TODO: check isSuperInventory from session — when true, drop locationId filter
+  const isSuperInventory = false;
+
+  const statusFilter =
+    status !== "all" && VALID_STATUSES.includes(status as OrderStatus)
+      ? (status as OrderStatus)
+      : undefined;
+
+  const orders = await prisma.purchaseOrder.findMany({
     where: {
-      OR: [
-        ...(direction !== "in" ? [{ fromLocationId: locationId }] : []),
-        ...(direction !== "out" ? [{ toLocationId: locationId }] : []),
-      ],
+      ...(statusFilter ? { status: statusFilter } : {}),
+      ...(isSuperInventory ? {} : { locationId }),
     },
     include: {
-      product: { select: { name: true, productCode: true, unit: { select: { abbreviation: true } } } },
-      fromLocation: { select: { id: true, name: true } },
-      toLocation: { select: { id: true, name: true } },
+      vendor:   { select: { name: true } },
+      location: { select: { name: true } },
+      items:    { select: { retailRaised: true, consumableRaised: true } },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { orderRefNumber: "desc" },
   });
 
   return NextResponse.json(
-    transfers.map((t) => ({
-      id: t.id,
-      units: t.units,
-      createdAt: t.createdAt,
-      product: {
-        name: t.product.name,
-        productCode: t.product.productCode,
-        unit: t.product.unit?.abbreviation ?? "",
-      },
-      from: { id: t.fromLocation.id, name: t.fromLocation.name },
-      to: { id: t.toLocation.id, name: t.toLocation.name },
-      direction: t.toLocationId === locationId ? "in" : "out",
+    orders.map((po) => ({
+      id:             po.id,
+      orderRefNumber: po.orderRefNumber,
+      status:         po.status,
+      createdAt:      po.createdAt,
+      orderedAt:      po.orderedAt,
+      raisedAt:       po.raisedAt,
+      deliveredAt:    po.deliveredAt,
+      vendor:         po.vendor ? { name: po.vendor.name } : null,
+      location:       { name: po.location.name },
+      itemCount:      po.items.length,
+      totalQty:       po.items.reduce((s, i) => s + i.retailRaised + i.consumableRaised, 0),
     }))
   );
 }
