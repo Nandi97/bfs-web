@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BriefcaseBusiness, Building2, CalendarRange, ChevronRight, Users } from "lucide-react";
 
 import {
@@ -25,38 +27,55 @@ import {
 } from "@/components/ui/sidebar";
 import { UserNav } from "@/components/layout/user-nav";
 
-const navItems = [
+type SubItem = { title: string; href: string };
+type NavItem = {
+  title: string;
+  icon: React.ElementType;
+  href?: string;
+  items: SubItem[];
+};
+
+const navItems: NavItem[] = [
   {
     title: "Dashboard",
     icon: Building2,
-    isActive: true,
+    href: "/",
     items: [],
   },
   {
     title: "Operations",
     icon: BriefcaseBusiness,
-    isActive: true,
     items: [
-      { title: "Retail" },
-      { title: "Services" },
-      { title: "Inventory" },
+      { title: "Retail",     href: "#" },
+      { title: "Services",   href: "#" },
+      { title: "Inventory",  href: "/inventory" },
     ],
   },
   {
     title: "Planning",
     icon: CalendarRange,
-    isActive: false,
-    items: [{ title: "Staffing" }, { title: "Promotions" }],
+    items: [
+      { title: "Staffing",    href: "#" },
+      { title: "Promotions",  href: "#" },
+    ],
   },
   {
     title: "Team",
     icon: Users,
-    isActive: false,
+    href: "#",
     items: [],
   },
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
+
+  const isSubActive = (href: string) =>
+    href !== "#" && (pathname === href || pathname.startsWith(href + "/"));
+
+  const isGroupActive = (item: NavItem) =>
+    item.items.some((sub) => isSubActive(sub.href));
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -82,17 +101,22 @@ export function AppSidebar() {
           <SidebarMenu>
             {navItems.map((item) => {
               const Icon = item.icon;
+              const groupActive = isGroupActive(item);
+              const topActive =
+                item.href !== undefined &&
+                item.href !== "#" &&
+                (pathname === item.href || pathname.startsWith(item.href + "/"));
 
               return item.items.length > 0 ? (
                 <Collapsible
                   key={item.title}
                   asChild
-                  defaultOpen={item.isActive}
+                  defaultOpen={groupActive}
                   className="group/collapsible"
                 >
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
-                      <SidebarMenuButton tooltip={item.title} isActive={item.isActive}>
+                      <SidebarMenuButton tooltip={item.title} isActive={groupActive}>
                         <Icon className="size-4" />
                         <span>{item.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -102,8 +126,11 @@ export function AppSidebar() {
                       <SidebarMenuSub>
                         {item.items.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton asChild isActive={subItem.title === "Retail"}>
-                              <a href="#">{subItem.title}</a>
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={isSubActive(subItem.href)}
+                            >
+                              <Link href={subItem.href}>{subItem.title}</Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
@@ -113,9 +140,22 @@ export function AppSidebar() {
                 </Collapsible>
               ) : (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton tooltip={item.title} isActive={item.isActive}>
-                    <Icon className="size-4" />
-                    <span>{item.title}</span>
+                  <SidebarMenuButton
+                    tooltip={item.title}
+                    isActive={topActive}
+                    asChild={!!item.href && item.href !== "#"}
+                  >
+                    {item.href && item.href !== "#" ? (
+                      <Link href={item.href}>
+                        <Icon className="size-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    ) : (
+                      <>
+                        <Icon className="size-4" />
+                        <span>{item.title}</span>
+                      </>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );
