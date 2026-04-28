@@ -40,6 +40,7 @@ export type InventoryTransferMinAggregateOutputType = {
   id: string | null
   productId: string | null
   units: number | null
+  status: $Enums.OrderStatus | null
   sortOrder: number | null
   fromLocationId: string | null
   toLocationId: string | null
@@ -51,6 +52,7 @@ export type InventoryTransferMaxAggregateOutputType = {
   id: string | null
   productId: string | null
   units: number | null
+  status: $Enums.OrderStatus | null
   sortOrder: number | null
   fromLocationId: string | null
   toLocationId: string | null
@@ -62,6 +64,7 @@ export type InventoryTransferCountAggregateOutputType = {
   id: number
   productId: number
   units: number
+  status: number
   sortOrder: number
   fromLocationId: number
   toLocationId: number
@@ -85,6 +88,7 @@ export type InventoryTransferMinAggregateInputType = {
   id?: true
   productId?: true
   units?: true
+  status?: true
   sortOrder?: true
   fromLocationId?: true
   toLocationId?: true
@@ -96,6 +100,7 @@ export type InventoryTransferMaxAggregateInputType = {
   id?: true
   productId?: true
   units?: true
+  status?: true
   sortOrder?: true
   fromLocationId?: true
   toLocationId?: true
@@ -107,6 +112,7 @@ export type InventoryTransferCountAggregateInputType = {
   id?: true
   productId?: true
   units?: true
+  status?: true
   sortOrder?: true
   fromLocationId?: true
   toLocationId?: true
@@ -205,6 +211,7 @@ export type InventoryTransferGroupByOutputType = {
   id: string
   productId: string
   units: number
+  status: $Enums.OrderStatus
   sortOrder: number
   fromLocationId: string
   toLocationId: string
@@ -239,6 +246,7 @@ export type InventoryTransferWhereInput = {
   id?: Prisma.StringFilter<"InventoryTransfer"> | string
   productId?: Prisma.StringFilter<"InventoryTransfer"> | string
   units?: Prisma.IntFilter<"InventoryTransfer"> | number
+  status?: Prisma.EnumOrderStatusFilter<"InventoryTransfer"> | $Enums.OrderStatus
   sortOrder?: Prisma.IntFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   toLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
@@ -253,6 +261,7 @@ export type InventoryTransferOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
   toLocationId?: Prisma.SortOrder
@@ -270,6 +279,7 @@ export type InventoryTransferWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InventoryTransferWhereInput | Prisma.InventoryTransferWhereInput[]
   productId?: Prisma.StringFilter<"InventoryTransfer"> | string
   units?: Prisma.IntFilter<"InventoryTransfer"> | number
+  status?: Prisma.EnumOrderStatusFilter<"InventoryTransfer"> | $Enums.OrderStatus
   sortOrder?: Prisma.IntFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   toLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
@@ -284,6 +294,7 @@ export type InventoryTransferOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
   toLocationId?: Prisma.SortOrder
@@ -303,6 +314,7 @@ export type InventoryTransferScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
   productId?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
   units?: Prisma.IntWithAggregatesFilter<"InventoryTransfer"> | number
+  status?: Prisma.EnumOrderStatusWithAggregatesFilter<"InventoryTransfer"> | $Enums.OrderStatus
   sortOrder?: Prisma.IntWithAggregatesFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
   toLocationId?: Prisma.StringWithAggregatesFilter<"InventoryTransfer"> | string
@@ -313,6 +325,7 @@ export type InventoryTransferScalarWhereWithAggregatesInput = {
 export type InventoryTransferCreateInput = {
   id?: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -325,6 +338,7 @@ export type InventoryTransferUncheckedCreateInput = {
   id?: string
   productId: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   fromLocationId: string
   toLocationId: string
@@ -335,6 +349,7 @@ export type InventoryTransferUncheckedCreateInput = {
 export type InventoryTransferUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -347,6 +362,7 @@ export type InventoryTransferUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -358,6 +374,7 @@ export type InventoryTransferCreateManyInput = {
   id?: string
   productId: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   fromLocationId: string
   toLocationId: string
@@ -368,6 +385,7 @@ export type InventoryTransferCreateManyInput = {
 export type InventoryTransferUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -377,6 +395,7 @@ export type InventoryTransferUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -398,6 +417,7 @@ export type InventoryTransferCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
   toLocationId?: Prisma.SortOrder
@@ -414,6 +434,7 @@ export type InventoryTransferMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
   toLocationId?: Prisma.SortOrder
@@ -425,6 +446,7 @@ export type InventoryTransferMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   units?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   fromLocationId?: Prisma.SortOrder
   toLocationId?: Prisma.SortOrder
@@ -563,9 +585,14 @@ export type InventoryTransferUncheckedUpdateManyWithoutProductNestedInput = {
   deleteMany?: Prisma.InventoryTransferScalarWhereInput | Prisma.InventoryTransferScalarWhereInput[]
 }
 
+export type EnumOrderStatusFieldUpdateOperationsInput = {
+  set?: $Enums.OrderStatus
+}
+
 export type InventoryTransferCreateWithoutFromLocationInput = {
   id?: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -577,6 +604,7 @@ export type InventoryTransferUncheckedCreateWithoutFromLocationInput = {
   id?: string
   productId: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   toLocationId: string
   createdAt?: Date | string
@@ -596,6 +624,7 @@ export type InventoryTransferCreateManyFromLocationInputEnvelope = {
 export type InventoryTransferCreateWithoutToLocationInput = {
   id?: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -607,6 +636,7 @@ export type InventoryTransferUncheckedCreateWithoutToLocationInput = {
   id?: string
   productId: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   fromLocationId: string
   createdAt?: Date | string
@@ -646,6 +676,7 @@ export type InventoryTransferScalarWhereInput = {
   id?: Prisma.StringFilter<"InventoryTransfer"> | string
   productId?: Prisma.StringFilter<"InventoryTransfer"> | string
   units?: Prisma.IntFilter<"InventoryTransfer"> | number
+  status?: Prisma.EnumOrderStatusFilter<"InventoryTransfer"> | $Enums.OrderStatus
   sortOrder?: Prisma.IntFilter<"InventoryTransfer"> | number
   fromLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
   toLocationId?: Prisma.StringFilter<"InventoryTransfer"> | string
@@ -672,6 +703,7 @@ export type InventoryTransferUpdateManyWithWhereWithoutToLocationInput = {
 export type InventoryTransferCreateWithoutProductInput = {
   id?: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -682,6 +714,7 @@ export type InventoryTransferCreateWithoutProductInput = {
 export type InventoryTransferUncheckedCreateWithoutProductInput = {
   id?: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   fromLocationId: string
   toLocationId: string
@@ -719,6 +752,7 @@ export type InventoryTransferCreateManyFromLocationInput = {
   id?: string
   productId: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   toLocationId: string
   createdAt?: Date | string
@@ -729,6 +763,7 @@ export type InventoryTransferCreateManyToLocationInput = {
   id?: string
   productId: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   fromLocationId: string
   createdAt?: Date | string
@@ -738,6 +773,7 @@ export type InventoryTransferCreateManyToLocationInput = {
 export type InventoryTransferUpdateWithoutFromLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -749,6 +785,7 @@ export type InventoryTransferUncheckedUpdateWithoutFromLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -759,6 +796,7 @@ export type InventoryTransferUncheckedUpdateManyWithoutFromLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -768,6 +806,7 @@ export type InventoryTransferUncheckedUpdateManyWithoutFromLocationInput = {
 export type InventoryTransferUpdateWithoutToLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -779,6 +818,7 @@ export type InventoryTransferUncheckedUpdateWithoutToLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -789,6 +829,7 @@ export type InventoryTransferUncheckedUpdateManyWithoutToLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -798,6 +839,7 @@ export type InventoryTransferUncheckedUpdateManyWithoutToLocationInput = {
 export type InventoryTransferCreateManyProductInput = {
   id?: string
   units: number
+  status?: $Enums.OrderStatus
   sortOrder?: number
   fromLocationId: string
   toLocationId: string
@@ -808,6 +850,7 @@ export type InventoryTransferCreateManyProductInput = {
 export type InventoryTransferUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -818,6 +861,7 @@ export type InventoryTransferUpdateWithoutProductInput = {
 export type InventoryTransferUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -828,6 +872,7 @@ export type InventoryTransferUncheckedUpdateWithoutProductInput = {
 export type InventoryTransferUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   units?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   fromLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   toLocationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -841,6 +886,7 @@ export type InventoryTransferSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   productId?: boolean
   units?: boolean
+  status?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
@@ -855,6 +901,7 @@ export type InventoryTransferSelectCreateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   productId?: boolean
   units?: boolean
+  status?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
@@ -869,6 +916,7 @@ export type InventoryTransferSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   productId?: boolean
   units?: boolean
+  status?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
@@ -883,6 +931,7 @@ export type InventoryTransferSelectScalar = {
   id?: boolean
   productId?: boolean
   units?: boolean
+  status?: boolean
   sortOrder?: boolean
   fromLocationId?: boolean
   toLocationId?: boolean
@@ -890,7 +939,7 @@ export type InventoryTransferSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InventoryTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "units" | "sortOrder" | "fromLocationId" | "toLocationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryTransfer"]>
+export type InventoryTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "units" | "status" | "sortOrder" | "fromLocationId" | "toLocationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryTransfer"]>
 export type InventoryTransferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   fromLocation?: boolean | Prisma.StoreLocationDefaultArgs<ExtArgs>
@@ -918,6 +967,7 @@ export type $InventoryTransferPayload<ExtArgs extends runtime.Types.Extensions.I
     id: string
     productId: string
     units: number
+    status: $Enums.OrderStatus
     sortOrder: number
     fromLocationId: string
     toLocationId: string
@@ -1352,6 +1402,7 @@ export interface InventoryTransferFieldRefs {
   readonly id: Prisma.FieldRef<"InventoryTransfer", 'String'>
   readonly productId: Prisma.FieldRef<"InventoryTransfer", 'String'>
   readonly units: Prisma.FieldRef<"InventoryTransfer", 'Int'>
+  readonly status: Prisma.FieldRef<"InventoryTransfer", 'OrderStatus'>
   readonly sortOrder: Prisma.FieldRef<"InventoryTransfer", 'Int'>
   readonly fromLocationId: Prisma.FieldRef<"InventoryTransfer", 'String'>
   readonly toLocationId: Prisma.FieldRef<"InventoryTransfer", 'String'>

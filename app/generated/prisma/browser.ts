@@ -97,3 +97,18 @@ export type OperationalTask = Prisma.OperationalTaskModel
  * 
  */
 export type InventoryTransfer = Prisma.InventoryTransferModel
+/**
+ * Model Vendor
+ * 
+ */
+export type Vendor = Prisma.VendorModel
+/**
+ * Model PurchaseOrder
+ * 
+ */
+export type PurchaseOrder = Prisma.PurchaseOrderModel
+/**
+ * Model PurchaseOrderItem
+ * 
+ */
+export type PurchaseOrderItem = Prisma.PurchaseOrderItemModel

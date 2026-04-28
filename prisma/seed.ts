@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient, StoreType } from "../app/generated/prisma/client";
+import { PrismaClient, StoreType, OrderStatus } from "../app/generated/prisma/client";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is not set");
@@ -10,6 +10,9 @@ const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) })
 
 async function main() {
   // --- Clear (children before parents) ---
+  await prisma.purchaseOrderItem.deleteMany();
+  await prisma.purchaseOrder.deleteMany();
+  await prisma.vendor.deleteMany();
   await prisma.stockLevel.deleteMany();
   await prisma.staffDepartment.deleteMany();
   await prisma.staffAssignment.deleteMany();
@@ -43,12 +46,13 @@ async function main() {
 
   // ── Departments (head-office groupings only) ──────────────────────────────
 
-  const [deptExec, deptMarketing, deptAccounting, deptInventory, deptOps, deptHR] =
+  const [deptExec, deptMarketing, deptAccounting, deptInventory, deptWarehouse, deptOps, deptHR] =
     await Promise.all([
       prisma.department.create({ data: { name: "Executive" } }),
       prisma.department.create({ data: { name: "Marketing" } }),
       prisma.department.create({ data: { name: "Accounting & Finance" } }),
       prisma.department.create({ data: { name: "Inventory & Supply Chain" } }),
+      prisma.department.create({ data: { name: "Warehouse" } }),
       prisma.department.create({ data: { name: "Operations" } }),
       prisma.department.create({ data: { name: "Human Resources" } }),
     ]);
@@ -69,6 +73,7 @@ async function main() {
     roleAesthetician,
     roleRetailAssoc,
     roleReceptionist,
+    roleSuperInventory,
   ] = await Promise.all([
     prisma.role.create({ data: { name: "CEO" } }),
     prisma.role.create({ data: { name: "Operations Director" } }),
@@ -83,10 +88,12 @@ async function main() {
     prisma.role.create({ data: { name: "Aesthetician" } }),
     prisma.role.create({ data: { name: "Retail Associate" } }),
     prisma.role.create({ data: { name: "Receptionist" } }),
+    // Cross-location order visibility — auto-granted to inventory/warehouse/admin depts
+    prisma.role.create({ data: { name: "Super Inventory" } }),
   ]);
 
   // suppress unused-variable warnings — roles exist in the DB for future assignments
-  void roleMktCoord, roleAsstMgr, roleAesthetician, roleRetailAssoc, roleReceptionist;
+  void roleMktCoord, roleAsstMgr, roleAesthetician, roleRetailAssoc, roleReceptionist, roleSuperInventory;
 
   // ── Locations ─────────────────────────────────────────────────────────────
   // Addresses are approximate — update unit numbers / suite numbers as needed.
@@ -463,6 +470,7 @@ async function main() {
       { staffMemberId: sarah.id,    departmentId: deptExec.id      },
       { staffMemberId: marcus.id,   departmentId: deptOps.id       },
       { staffMemberId: priya.id,    departmentId: deptInventory.id },
+      { staffMemberId: priya.id,    departmentId: deptWarehouse.id },
       { staffMemberId: danielle.id, departmentId: deptMarketing.id },
       { staffMemberId: james.id,    departmentId: deptAccounting.id},
       { staffMemberId: nina.id,     departmentId: deptHR.id        },
@@ -535,37 +543,189 @@ async function main() {
     ],
   });
 
-  // ── Inventory transfers ───────────────────────────────────────────────────
+  // ── Orders (HQ → store) ───────────────────────────────────────────────────
+  // All orders originate from Head Office. Statuses represent the fulfilment
+  // lifecycle: CREATED → UPDATED → ORDERED → RAISED → DELIVERED
+
+  const hqLoc = loc["Head Office"];
 
   await prisma.inventoryTransfer.createMany({
     data: [
-      {
-        productId:      pSerum.id,
-        units:          24,
-        fromLocationId: loc["Burlington (Corporate)"].id,
-        toLocationId:   loc["Rymal"].id,
-        sortOrder:      1,
-      },
-      {
-        productId:      pCleanser.id,
-        units:          12,
-        fromLocationId: loc["Limeridge"].id,
-        toLocationId:   loc["Oakville (Franchise)"].id,
-        sortOrder:      2,
-      },
-      {
-        productId:      pWax.id,
-        units:          40,
-        fromLocationId: loc["Square One"].id,
-        toLocationId:   loc["Upper Canada Mall"].id,
-        sortOrder:      3,
-      },
+      // Delivered
+      { productId: pSerum.id,       units: 24, status: OrderStatus.DELIVERED, fromLocationId: hqLoc.id, toLocationId: loc["Burlington (Corporate)"].id, sortOrder: 1 },
+      { productId: pCleanser.id,    units: 12, status: OrderStatus.DELIVERED, fromLocationId: hqLoc.id, toLocationId: loc["Limeridge"].id,               sortOrder: 2 },
+      { productId: pFoundation.id,  units:  6, status: OrderStatus.DELIVERED, fromLocationId: hqLoc.id, toLocationId: loc["Rymal"].id,                   sortOrder: 3 },
+      // Raised
+      { productId: pWax.id,         units: 40, status: OrderStatus.RAISED,    fromLocationId: hqLoc.id, toLocationId: loc["Square One"].id,              sortOrder: 4 },
+      { productId: pPrimer.id,      units: 18, status: OrderStatus.RAISED,    fromLocationId: hqLoc.id, toLocationId: loc["Oakville (Corporate)"].id,    sortOrder: 5 },
+      // Ordered
+      { productId: pSerum.id,       units: 36, status: OrderStatus.ORDERED,   fromLocationId: hqLoc.id, toLocationId: loc["Upper Canada Mall"].id,       sortOrder: 6 },
+      { productId: pCleanser.id,    units: 24, status: OrderStatus.ORDERED,   fromLocationId: hqLoc.id, toLocationId: loc["Bayshore Mall"].id,           sortOrder: 7 },
+      { productId: pLaserGel.id,    units: 10, status: OrderStatus.ORDERED,   fromLocationId: hqLoc.id, toLocationId: loc["Hillcrest Mall"].id,          sortOrder: 8 },
+      // Updated
+      { productId: pFoundation.id,  units: 12, status: OrderStatus.UPDATED,   fromLocationId: hqLoc.id, toLocationId: loc["Bolton"].id,                  sortOrder: 9 },
+      { productId: pWax.id,         units: 20, status: OrderStatus.UPDATED,   fromLocationId: hqLoc.id, toLocationId: loc["Oakville (Franchise)"].id,    sortOrder: 10 },
+      // Created
+      { productId: pPrimer.id,      units: 30, status: OrderStatus.CREATED,   fromLocationId: hqLoc.id, toLocationId: loc["Dixie Mall"].id,              sortOrder: 11 },
+      { productId: pSerum.id,       units: 48, status: OrderStatus.CREATED,   fromLocationId: hqLoc.id, toLocationId: loc["Limeridge"].id,               sortOrder: 12 },
     ],
   });
 
+  // ── Vendors ───────────────────────────────────────────────────────────────
+
+  const [vInverness, vDepileve, vDermalogica, vGigi] = await Promise.all([
+    prisma.vendor.create({ data: { name: "Inverness",    email: "orders@inverness.com",      address: "1000 Inverness Dr, Toronto, ON" } }),
+    prisma.vendor.create({ data: { name: "Depilève",     email: "orders@depileve.ca",         address: "300 Labrosse Ave, Pointe-Claire, QC" } }),
+    prisma.vendor.create({ data: { name: "Dermalogica",  email: "wholesale@dermalogica.com",  address: "1 Dermalogica Way, Carson, CA" } }),
+    prisma.vendor.create({ data: { name: "GiGi",         email: "orders@gigiwax.com",         address: "2220 Gaspar Ave, Los Angeles, CA" } }),
+  ]);
+
+  // ── Purchase orders (store → vendor procurement via HQ) ──────────────────
+  // locationId = the store that requested the stock.
+  // All orders go through Head Office fulfilment before reaching the store.
+
+  const burlington  = loc["Burlington (Corporate)"];
+  const limeridge   = loc["Limeridge"];
+  const squareOne   = loc["Square One"];
+  const oakvilleCo  = loc["Oakville (Corporate)"];
+  const rymal       = loc["Rymal"];
+  const bayshore    = loc["Bayshore Mall"];
+
+  // Helper: create a full purchase order with items in one call
+  async function createPO(data: {
+    refNumber:  number;
+    status:     OrderStatus;
+    vendorId:   string;
+    locationId: string;
+    orderedAt?: Date;
+    raisedAt?:  Date;
+    deliveredAt?: Date;
+    invoiceNumber?: string;
+    isInvoicePaid?: boolean;
+    dateOfDelivery?: Date;
+    notes?: string;
+    items: {
+      productId: string;
+      vendorPartNumber?: string;
+      retailRaised:      number;
+      consumableRaised:  number;
+      retailReceived?:   number;
+      consumableReceived?: number;
+    }[];
+  }) {
+    return prisma.purchaseOrder.create({
+      data: {
+        orderRefNumber:  data.refNumber,
+        status:          data.status,
+        vendorId:        data.vendorId,
+        locationId:      data.locationId,
+        orderedAt:       data.orderedAt,
+        raisedAt:        data.raisedAt,
+        deliveredAt:     data.deliveredAt,
+        invoiceNumber:   data.invoiceNumber,
+        isInvoicePaid:   data.isInvoicePaid ?? false,
+        dateOfDelivery:  data.dateOfDelivery,
+        notes:           data.notes,
+        items: {
+          create: data.items.map((item) => ({
+            productId:          item.productId,
+            vendorPartNumber:   item.vendorPartNumber,
+            retailRaised:       item.retailRaised,
+            consumableRaised:   item.consumableRaised,
+            retailReceived:     item.retailReceived      ?? 0,
+            consumableReceived: item.consumableReceived  ?? 0,
+          })),
+        },
+      },
+    });
+  }
+
+  const now = new Date("2026-04-27T14:32:00Z");
+  const d   = (h: number) => new Date(now.getTime() + h * 3_600_000);
+
+  await Promise.all([
+    // PO 3901 — DELIVERED: Burlington ← Dermalogica (serums + cleanser)
+    createPO({
+      refNumber: 3901, status: OrderStatus.DELIVERED,
+      vendorId: vDermalogica.id, locationId: burlington.id,
+      orderedAt: d(0), raisedAt: d(1), deliveredAt: d(48),
+      invoiceNumber: "DL-22871", isInvoicePaid: true,
+      dateOfDelivery: d(48),
+      items: [
+        { productId: pSerum.id,    vendorPartNumber: "DL-SRM-30",  retailRaised: 12, consumableRaised: 12, retailReceived: 12, consumableReceived: 12 },
+        { productId: pCleanser.id, vendorPartNumber: "DL-CLN-200", retailRaised:  6, consumableRaised:  6, retailReceived:  6, consumableReceived:  6 },
+      ],
+    }),
+
+    // PO 3902 — DELIVERED: Limeridge ← GiGi (wax cartridges)
+    createPO({
+      refNumber: 3902, status: OrderStatus.DELIVERED,
+      vendorId: vGigi.id, locationId: limeridge.id,
+      orderedAt: d(0), raisedAt: d(2), deliveredAt: d(72),
+      invoiceNumber: "GG-10044", isInvoicePaid: true,
+      dateOfDelivery: d(72),
+      items: [
+        { productId: pWax.id, vendorPartNumber: "GG-WAX-CASS", retailRaised: 0, consumableRaised: 40, retailReceived: 0, consumableReceived: 40 },
+      ],
+    }),
+
+    // PO 3903 — RAISED: Square One ← Dermalogica (foundation + primer)
+    createPO({
+      refNumber: 3903, status: OrderStatus.RAISED,
+      vendorId: vDermalogica.id, locationId: squareOne.id,
+      orderedAt: d(0), raisedAt: d(1),
+      items: [
+        { productId: pFoundation.id, vendorPartNumber: "DL-FDN-FC",  retailRaised: 8, consumableRaised: 0 },
+        { productId: pPrimer.id,     vendorPartNumber: "DL-PRM-MAT", retailRaised: 6, consumableRaised: 0 },
+      ],
+    }),
+
+    // PO 3904 — RAISED: Oakville Corporate ← Depilève (laser cooling gel)
+    createPO({
+      refNumber: 3904, status: OrderStatus.RAISED,
+      vendorId: vDepileve.id, locationId: oakvilleCo.id,
+      orderedAt: d(0), raisedAt: d(3),
+      items: [
+        { productId: pLaserGel.id, vendorPartNumber: "DP-LCG-500", retailRaised: 0, consumableRaised: 24 },
+      ],
+    }),
+
+    // PO 3905 — ORDERED: Bayshore ← Inverness (mixed retail)
+    createPO({
+      refNumber: 3905, status: OrderStatus.ORDERED,
+      vendorId: vInverness.id, locationId: bayshore.id,
+      orderedAt: d(0),
+      items: [
+        { productId: pSerum.id,      vendorPartNumber: "INV-SRM",  retailRaised: 6,  consumableRaised: 0 },
+        { productId: pFoundation.id, vendorPartNumber: "INV-FDN",  retailRaised: 4,  consumableRaised: 0 },
+        { productId: pPrimer.id,     vendorPartNumber: "INV-PRM",  retailRaised: 4,  consumableRaised: 0 },
+        { productId: pCleanser.id,   vendorPartNumber: "INV-CLN",  retailRaised: 4,  consumableRaised: 0 },
+      ],
+    }),
+
+    // PO 3906 — UPDATED: Rymal ← GiGi (consumable wax)
+    createPO({
+      refNumber: 3906, status: OrderStatus.UPDATED,
+      vendorId: vGigi.id, locationId: rymal.id,
+      items: [
+        { productId: pWax.id, vendorPartNumber: "GG-WAX-CASS", retailRaised: 0, consumableRaised: 20 },
+      ],
+    }),
+
+    // PO 3907 — CREATED: Burlington ← Depilève (laser gel for services)
+    createPO({
+      refNumber: 3907, status: OrderStatus.CREATED,
+      vendorId: vDepileve.id, locationId: burlington.id,
+      items: [
+        { productId: pLaserGel.id, vendorPartNumber: "DP-LCG-500", retailRaised: 0, consumableRaised: 12 },
+      ],
+    }),
+  ]);
+
   console.log(
-    "Seed complete — 16 locations, 6 departments, 13 roles, " +
-    "12 staff, 6 products, 30 stock levels, 3 transfers."
+    "Seed complete — 16 locations, 7 departments, 14 roles, " +
+    "12 staff, 6 products, 30 stock levels, 12 internal transfers, " +
+    "4 vendors, 7 purchase orders."
   );
 }
 

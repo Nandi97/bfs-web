@@ -254,6 +254,7 @@ export type StoreLocationWhereInput = {
   incomingTransfers?: Prisma.InventoryTransferListRelationFilter
   staffAssignments?: Prisma.StaffAssignmentListRelationFilter
   stockLevels?: Prisma.StockLevelListRelationFilter
+  purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
 }
 
 export type StoreLocationOrderByWithRelationInput = {
@@ -272,6 +273,7 @@ export type StoreLocationOrderByWithRelationInput = {
   incomingTransfers?: Prisma.InventoryTransferOrderByRelationAggregateInput
   staffAssignments?: Prisma.StaffAssignmentOrderByRelationAggregateInput
   stockLevels?: Prisma.StockLevelOrderByRelationAggregateInput
+  purchaseOrders?: Prisma.PurchaseOrderOrderByRelationAggregateInput
 }
 
 export type StoreLocationWhereUniqueInput = Prisma.AtLeast<{
@@ -293,6 +295,7 @@ export type StoreLocationWhereUniqueInput = Prisma.AtLeast<{
   incomingTransfers?: Prisma.InventoryTransferListRelationFilter
   staffAssignments?: Prisma.StaffAssignmentListRelationFilter
   stockLevels?: Prisma.StockLevelListRelationFilter
+  purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
 }, "id">
 
 export type StoreLocationOrderByWithAggregationInput = {
@@ -343,6 +346,7 @@ export type StoreLocationCreateInput = {
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateInput = {
@@ -361,6 +365,7 @@ export type StoreLocationUncheckedCreateInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUpdateInput = {
@@ -379,6 +384,7 @@ export type StoreLocationUpdateInput = {
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateInput = {
@@ -397,6 +403,7 @@ export type StoreLocationUncheckedUpdateInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateManyInput = {
@@ -587,6 +594,20 @@ export type StoreLocationUpdateOneRequiredWithoutIncomingTransfersNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreLocationUpdateToOneWithWhereWithoutIncomingTransfersInput, Prisma.StoreLocationUpdateWithoutIncomingTransfersInput>, Prisma.StoreLocationUncheckedUpdateWithoutIncomingTransfersInput>
 }
 
+export type StoreLocationCreateNestedOneWithoutPurchaseOrdersInput = {
+  create?: Prisma.XOR<Prisma.StoreLocationCreateWithoutPurchaseOrdersInput, Prisma.StoreLocationUncheckedCreateWithoutPurchaseOrdersInput>
+  connectOrCreate?: Prisma.StoreLocationCreateOrConnectWithoutPurchaseOrdersInput
+  connect?: Prisma.StoreLocationWhereUniqueInput
+}
+
+export type StoreLocationUpdateOneRequiredWithoutPurchaseOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreLocationCreateWithoutPurchaseOrdersInput, Prisma.StoreLocationUncheckedCreateWithoutPurchaseOrdersInput>
+  connectOrCreate?: Prisma.StoreLocationCreateOrConnectWithoutPurchaseOrdersInput
+  upsert?: Prisma.StoreLocationUpsertWithoutPurchaseOrdersInput
+  connect?: Prisma.StoreLocationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreLocationUpdateToOneWithWhereWithoutPurchaseOrdersInput, Prisma.StoreLocationUpdateWithoutPurchaseOrdersInput>, Prisma.StoreLocationUncheckedUpdateWithoutPurchaseOrdersInput>
+}
+
 export type StoreLocationCreateWithoutStaffAssignmentsInput = {
   id?: string
   name: string
@@ -602,6 +623,7 @@ export type StoreLocationCreateWithoutStaffAssignmentsInput = {
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutStaffAssignmentsInput = {
@@ -619,6 +641,7 @@ export type StoreLocationUncheckedCreateWithoutStaffAssignmentsInput = {
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutStaffAssignmentsInput = {
@@ -652,6 +675,7 @@ export type StoreLocationUpdateWithoutStaffAssignmentsInput = {
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutStaffAssignmentsInput = {
@@ -669,6 +693,7 @@ export type StoreLocationUncheckedUpdateWithoutStaffAssignmentsInput = {
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateWithoutStockLevelsInput = {
@@ -686,6 +711,7 @@ export type StoreLocationCreateWithoutStockLevelsInput = {
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutStockLevelsInput = {
@@ -703,6 +729,7 @@ export type StoreLocationUncheckedCreateWithoutStockLevelsInput = {
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutStockLevelsInput = {
@@ -736,6 +763,7 @@ export type StoreLocationUpdateWithoutStockLevelsInput = {
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutStockLevelsInput = {
@@ -753,6 +781,7 @@ export type StoreLocationUncheckedUpdateWithoutStockLevelsInput = {
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateWithoutAppointmentsInput = {
@@ -770,6 +799,7 @@ export type StoreLocationCreateWithoutAppointmentsInput = {
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutAppointmentsInput = {
@@ -787,6 +817,7 @@ export type StoreLocationUncheckedCreateWithoutAppointmentsInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutAppointmentsInput = {
@@ -820,6 +851,7 @@ export type StoreLocationUpdateWithoutAppointmentsInput = {
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutAppointmentsInput = {
@@ -837,6 +869,7 @@ export type StoreLocationUncheckedUpdateWithoutAppointmentsInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateWithoutTasksInput = {
@@ -854,6 +887,7 @@ export type StoreLocationCreateWithoutTasksInput = {
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutTasksInput = {
@@ -871,6 +905,7 @@ export type StoreLocationUncheckedCreateWithoutTasksInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutTasksInput = {
@@ -904,6 +939,7 @@ export type StoreLocationUpdateWithoutTasksInput = {
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutTasksInput = {
@@ -921,6 +957,7 @@ export type StoreLocationUncheckedUpdateWithoutTasksInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationCreateWithoutOutgoingTransfersInput = {
@@ -938,6 +975,7 @@ export type StoreLocationCreateWithoutOutgoingTransfersInput = {
   incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutOutgoingTransfersInput = {
@@ -955,6 +993,7 @@ export type StoreLocationUncheckedCreateWithoutOutgoingTransfersInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutOutgoingTransfersInput = {
@@ -977,6 +1016,7 @@ export type StoreLocationCreateWithoutIncomingTransfersInput = {
   outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
   staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationUncheckedCreateWithoutIncomingTransfersInput = {
@@ -994,6 +1034,7 @@ export type StoreLocationUncheckedCreateWithoutIncomingTransfersInput = {
   outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type StoreLocationCreateOrConnectWithoutIncomingTransfersInput = {
@@ -1027,6 +1068,7 @@ export type StoreLocationUpdateWithoutOutgoingTransfersInput = {
   incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutOutgoingTransfersInput = {
@@ -1044,6 +1086,7 @@ export type StoreLocationUncheckedUpdateWithoutOutgoingTransfersInput = {
   incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUpsertWithoutIncomingTransfersInput = {
@@ -1072,6 +1115,7 @@ export type StoreLocationUpdateWithoutIncomingTransfersInput = {
   outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutLocationNestedInput
 }
 
 export type StoreLocationUncheckedUpdateWithoutIncomingTransfersInput = {
@@ -1089,6 +1133,95 @@ export type StoreLocationUncheckedUpdateWithoutIncomingTransfersInput = {
   outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
   staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutLocationNestedInput
+}
+
+export type StoreLocationCreateWithoutPurchaseOrdersInput = {
+  id?: string
+  name: string
+  type: $Enums.StoreType
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  appointments?: Prisma.ServiceAppointmentCreateNestedManyWithoutStoreInput
+  tasks?: Prisma.OperationalTaskCreateNestedManyWithoutStoreInput
+  outgoingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutFromLocationInput
+  incomingTransfers?: Prisma.InventoryTransferCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelCreateNestedManyWithoutLocationInput
+}
+
+export type StoreLocationUncheckedCreateWithoutPurchaseOrdersInput = {
+  id?: string
+  name: string
+  type: $Enums.StoreType
+  address?: string | null
+  serviceQueueLabel?: string | null
+  stockAlert?: string | null
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  appointments?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutStoreInput
+  tasks?: Prisma.OperationalTaskUncheckedCreateNestedManyWithoutStoreInput
+  outgoingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutFromLocationInput
+  incomingTransfers?: Prisma.InventoryTransferUncheckedCreateNestedManyWithoutToLocationInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutLocationInput
+  stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutLocationInput
+}
+
+export type StoreLocationCreateOrConnectWithoutPurchaseOrdersInput = {
+  where: Prisma.StoreLocationWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreLocationCreateWithoutPurchaseOrdersInput, Prisma.StoreLocationUncheckedCreateWithoutPurchaseOrdersInput>
+}
+
+export type StoreLocationUpsertWithoutPurchaseOrdersInput = {
+  update: Prisma.XOR<Prisma.StoreLocationUpdateWithoutPurchaseOrdersInput, Prisma.StoreLocationUncheckedUpdateWithoutPurchaseOrdersInput>
+  create: Prisma.XOR<Prisma.StoreLocationCreateWithoutPurchaseOrdersInput, Prisma.StoreLocationUncheckedCreateWithoutPurchaseOrdersInput>
+  where?: Prisma.StoreLocationWhereInput
+}
+
+export type StoreLocationUpdateToOneWithWhereWithoutPurchaseOrdersInput = {
+  where?: Prisma.StoreLocationWhereInput
+  data: Prisma.XOR<Prisma.StoreLocationUpdateWithoutPurchaseOrdersInput, Prisma.StoreLocationUncheckedUpdateWithoutPurchaseOrdersInput>
+}
+
+export type StoreLocationUpdateWithoutPurchaseOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointments?: Prisma.ServiceAppointmentUpdateManyWithoutStoreNestedInput
+  tasks?: Prisma.OperationalTaskUpdateManyWithoutStoreNestedInput
+  outgoingTransfers?: Prisma.InventoryTransferUpdateManyWithoutFromLocationNestedInput
+  incomingTransfers?: Prisma.InventoryTransferUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUpdateManyWithoutLocationNestedInput
+}
+
+export type StoreLocationUncheckedUpdateWithoutPurchaseOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceQueueLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stockAlert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointments?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutStoreNestedInput
+  tasks?: Prisma.OperationalTaskUncheckedUpdateManyWithoutStoreNestedInput
+  outgoingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutFromLocationNestedInput
+  incomingTransfers?: Prisma.InventoryTransferUncheckedUpdateManyWithoutToLocationNestedInput
+  staffAssignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutLocationNestedInput
+  stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 
@@ -1103,6 +1236,7 @@ export type StoreLocationCountOutputType = {
   incomingTransfers: number
   staffAssignments: number
   stockLevels: number
+  purchaseOrders: number
 }
 
 export type StoreLocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1112,6 +1246,7 @@ export type StoreLocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Ext
   incomingTransfers?: boolean | StoreLocationCountOutputTypeCountIncomingTransfersArgs
   staffAssignments?: boolean | StoreLocationCountOutputTypeCountStaffAssignmentsArgs
   stockLevels?: boolean | StoreLocationCountOutputTypeCountStockLevelsArgs
+  purchaseOrders?: boolean | StoreLocationCountOutputTypeCountPurchaseOrdersArgs
 }
 
 /**
@@ -1166,6 +1301,13 @@ export type StoreLocationCountOutputTypeCountStockLevelsArgs<ExtArgs extends run
   where?: Prisma.StockLevelWhereInput
 }
 
+/**
+ * StoreLocationCountOutputType without action
+ */
+export type StoreLocationCountOutputTypeCountPurchaseOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseOrderWhereInput
+}
+
 
 export type StoreLocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1183,6 +1325,7 @@ export type StoreLocationSelect<ExtArgs extends runtime.Types.Extensions.Interna
   incomingTransfers?: boolean | Prisma.StoreLocation$incomingTransfersArgs<ExtArgs>
   staffAssignments?: boolean | Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs>
   stockLevels?: boolean | Prisma.StoreLocation$stockLevelsArgs<ExtArgs>
+  purchaseOrders?: boolean | Prisma.StoreLocation$purchaseOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.StoreLocationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storeLocation"]>
 
@@ -1230,6 +1373,7 @@ export type StoreLocationInclude<ExtArgs extends runtime.Types.Extensions.Intern
   incomingTransfers?: boolean | Prisma.StoreLocation$incomingTransfersArgs<ExtArgs>
   staffAssignments?: boolean | Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs>
   stockLevels?: boolean | Prisma.StoreLocation$stockLevelsArgs<ExtArgs>
+  purchaseOrders?: boolean | Prisma.StoreLocation$purchaseOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.StoreLocationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreLocationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1244,6 +1388,7 @@ export type $StoreLocationPayload<ExtArgs extends runtime.Types.Extensions.Inter
     incomingTransfers: Prisma.$InventoryTransferPayload<ExtArgs>[]
     staffAssignments: Prisma.$StaffAssignmentPayload<ExtArgs>[]
     stockLevels: Prisma.$StockLevelPayload<ExtArgs>[]
+    purchaseOrders: Prisma.$PurchaseOrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1655,6 +1800,7 @@ export interface Prisma__StoreLocationClient<T, Null = never, ExtArgs extends ru
   incomingTransfers<T extends Prisma.StoreLocation$incomingTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$incomingTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staffAssignments<T extends Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$staffAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockLevels<T extends Prisma.StoreLocation$stockLevelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$stockLevelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockLevelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseOrders<T extends Prisma.StoreLocation$purchaseOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreLocation$purchaseOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2227,6 +2373,30 @@ export type StoreLocation$stockLevelsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.StockLevelScalarFieldEnum | Prisma.StockLevelScalarFieldEnum[]
+}
+
+/**
+ * StoreLocation.purchaseOrders
+ */
+export type StoreLocation$purchaseOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseOrder
+   */
+  select?: Prisma.PurchaseOrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseOrder
+   */
+  omit?: Prisma.PurchaseOrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseOrderInclude<ExtArgs> | null
+  where?: Prisma.PurchaseOrderWhereInput
+  orderBy?: Prisma.PurchaseOrderOrderByWithRelationInput | Prisma.PurchaseOrderOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseOrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseOrderScalarFieldEnum | Prisma.PurchaseOrderScalarFieldEnum[]
 }
 
 /**

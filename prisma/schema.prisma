@@ -23,6 +23,14 @@ enum CommissionType {
   PERCENTAGE
 }
 
+enum OrderStatus {
+  CREATED
+  UPDATED
+  ORDERED
+  RAISED
+  DELIVERED
+}
+
 // ─── Auth models (Better Auth — do not rename columns) ────────────────────────
 
 model User {
@@ -107,6 +115,7 @@ model StoreLocation {
   incomingTransfers InventoryTransfer[]  @relation("transfer_to_location")
   staffAssignments  StaffAssignment[]
   stockLevels       StockLevel[]
+  purchaseOrders    PurchaseOrder[]
 }
 
 // ─── Staff ────────────────────────────────────────────────────────────────────
@@ -227,6 +236,7 @@ model Product {
 
   stockLevels StockLevel[]
   transfers   InventoryTransfer[]
+  orderItems  PurchaseOrderItem[]
 }
 
 // Quantity of a product at a specific location (retail + consumable stock combined).
@@ -279,6 +289,7 @@ model InventoryTransfer {
   id             String        @id @default(cuid())
   productId      String
   units          Int
+  status         OrderStatus   @default(CREATED)
   sortOrder      Int           @default(0)
   fromLocationId String
   toLocationId   String
@@ -288,8 +299,71 @@ model InventoryTransfer {
   fromLocation   StoreLocation @relation("transfer_from_location", fields: [fromLocationId], references: [id], onDelete: Restrict)
   toLocation     StoreLocation @relation("transfer_to_location", fields: [toLocationId], references: [id], onDelete: Restrict)
 
+  @@index([status])
   @@index([sortOrder])
   @@index([productId])
   @@index([fromLocationId])
   @@index([toLocationId])
+}
+
+// ─── Purchase Orders ──────────────────────────────────────────────────────────
+
+model Vendor {
+  id      String          @id @default(cuid())
+  name    String          @unique
+  email   String?
+  address String?
+  orders  PurchaseOrder[]
+}
+
+model PurchaseOrder {
+  id             String              @id @default(cuid())
+  orderRefNumber Int                 @unique @default(autoincrement())
+  status         OrderStatus         @default(CREATED)
+
+  vendorId       String?
+  vendor         Vendor?             @relation(fields: [vendorId], references: [id])
+  locationId     String
+  location       StoreLocation       @relation(fields: [locationId], references: [id], onDelete: Restrict)
+
+  // Milestone timestamps — set when the order reaches each stage
+  orderedAt      DateTime?
+  raisedAt       DateTime?
+  deliveredAt    DateTime?
+
+  // Invoice & shipment details (filled in as the order progresses)
+  invoiceNumber     String?
+  isInvoicePaid     Boolean   @default(false)
+  dateOfShipment    DateTime?
+  dateOfDelivery    DateTime?
+  addressOfDelivery String?
+  notes             String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items PurchaseOrderItem[]
+
+  @@index([status])
+  @@index([locationId])
+  @@index([vendorId])
+}
+
+model PurchaseOrderItem {
+  id      String        @id @default(cuid())
+  orderId String
+  order   PurchaseOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  vendorPartNumber   String?
+  retailRaised       Int     @default(0)
+  consumableRaised   Int     @default(0)
+  retailReceived     Int     @default(0)
+  consumableReceived Int     @default(0)
+  notes              String?
+
+  @@unique([orderId, productId])
+  @@index([orderId])
 }

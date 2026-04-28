@@ -23,6 +23,7 @@ import { ordersColumns, type OrderRow } from "./orders-columns";
 
 interface OrdersTableProps {
   data: OrderRow[];
+  isSuperInventory: boolean;
 }
 
 const DIRECTION_OPTIONS = [
@@ -31,7 +32,16 @@ const DIRECTION_OPTIONS = [
   { value: "out", label: "Outgoing"      },
 ];
 
-export function OrdersTable({ data }: OrdersTableProps) {
+const STATUS_OPTIONS = [
+  { value: "all",       label: "All statuses" },
+  { value: "CREATED",   label: "Created"      },
+  { value: "UPDATED",   label: "Updated"      },
+  { value: "ORDERED",   label: "Ordered"      },
+  { value: "RAISED",    label: "Raised"       },
+  { value: "DELIVERED", label: "Delivered"    },
+];
+
+export function OrdersTable({ data, isSuperInventory }: OrdersTableProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -51,6 +61,7 @@ export function OrdersTable({ data }: OrdersTableProps) {
   });
 
   const currentDirection = searchParams.get("direction") ?? "all";
+  const currentStatus    = searchParams.get("status")    ?? "all";
 
   const pushParam = useCallback(
     (key: string, value: string) => {
@@ -65,25 +76,47 @@ export function OrdersTable({ data }: OrdersTableProps) {
     [router, pathname, searchParams]
   );
 
+  const hasFilters = currentDirection !== "all" || currentStatus !== "all";
+
   return (
     <DataTable table={table}>
       <div className="flex flex-wrap items-center gap-2">
+        {/* Direction filter — hidden for super-inventory (all locations visible) */}
+        {!isSuperInventory && (
+          <Select
+            value={currentDirection}
+            onValueChange={(v) => pushParam("direction", v ?? "all")}
+          >
+            <SelectTrigger className="h-8 w-44">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {DIRECTION_OPTIONS.map((o) => (
+                <SelectItem key={o.value} value={o.value}>
+                  {o.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
         <Select
-          value={currentDirection}
-          onValueChange={(v) => pushParam("direction", v ?? "all")}
+          value={currentStatus}
+          onValueChange={(v) => pushParam("status", v ?? "all")}
         >
-          <SelectTrigger className="h-8 w-44">
+          <SelectTrigger className="h-8 w-40">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {DIRECTION_OPTIONS.map((o) => (
+            {STATUS_OPTIONS.map((o) => (
               <SelectItem key={o.value} value={o.value}>
                 {o.label}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-        {currentDirection !== "all" && (
+
+        {hasFilters && (
           <Button
             variant="outline"
             size="sm"

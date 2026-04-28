@@ -24,3 +24,14 @@ export const CommissionType = {
 } as const
 
 export type CommissionType = (typeof CommissionType)[keyof typeof CommissionType]
+
+
+export const OrderStatus = {
+  CREATED: 'CREATED',
+  UPDATED: 'UPDATED',
+  ORDERED: 'ORDERED',
+  RAISED: 'RAISED',
+  DELIVERED: 'DELIVERED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
