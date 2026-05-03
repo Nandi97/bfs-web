@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { ProductTable } from "@/components/inventory/products/product-table";
 import type { ProductRow } from "@/components/inventory/products/product-columns";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductsPage({
   params,
   searchParams,

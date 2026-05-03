@@ -12,6 +12,8 @@ import { StockBadge } from "@/components/inventory/stock-badge";
 import { Badge } from "@/components/ui/badge";
 import { ArrowDownToLine, ArrowUpFromLine, Package, TriangleAlert } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function InventoryDashboardPage({
   params,
 }: {

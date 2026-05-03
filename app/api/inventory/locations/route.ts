@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   // TODO: filter by user's StaffAssignment once auth is wired to StaffMember.
   // master-inventory role → all locations; store staff → their assigned location(s) only.

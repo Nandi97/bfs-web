@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { InventoryNav } from "@/components/inventory/inventory-nav";
 
+export const dynamic = "force-dynamic";
+
 // TODO: When auth is wired, add role check here:
 //   1. Get session user → find StaffMember by userId
 //   2. If StaffMember has StaffAssignment with Role "master-inventory" at HQ → allow all locationIds

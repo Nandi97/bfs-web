@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { OrdersFilterBar } from "@/components/inventory/orders/orders-filter-bar";
 import type { OrderStatus } from "@/app/generated/prisma/client";
 
+export const dynamic = "force-dynamic";
+
 const VALID_STATUSES: OrderStatus[] = [
   "CREATED", "UPDATED", "ORDERED", "RAISED", "DELIVERED",
 ];

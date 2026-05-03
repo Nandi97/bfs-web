@@ -8,6 +8,8 @@ import { OrderActions } from "@/components/inventory/orders/order-actions";
 import { Badge } from "@/components/ui/badge";
 import type { OrderStatus } from "@/app/generated/prisma/client";
 
+export const dynamic = "force-dynamic";
+
 const STATUS_LABEL: Record<OrderStatus, string> = {
   CREATED:   "Created",
   UPDATED:   "Updated",

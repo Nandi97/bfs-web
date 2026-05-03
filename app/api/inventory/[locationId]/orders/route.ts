@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { OrderStatus } from "@/app/generated/prisma/client";
 
+export const dynamic = "force-dynamic";
+
 const VALID_STATUSES: OrderStatus[] = [
   "CREATED", "UPDATED", "ORDERED", "RAISED", "DELIVERED",
 ];
