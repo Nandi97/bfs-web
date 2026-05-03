@@ -88,7 +88,7 @@ export function AppSidebar() {
           </div>
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm font-medium">BFS Operations</div>
-            <div className="truncate text-xs text-muted-foreground">
+            <div className="truncate text-xs text-emerald-700/80 dark:text-emerald-300/75">
               Corporate and franchise
             </div>
           </div>
@@ -97,7 +97,7 @@ export function AppSidebar() {
 
       <SidebarContent className="overflow-x-hidden">
         <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-emerald-700/75 dark:text-emerald-300/70">Platform</SidebarGroupLabel>
           <SidebarMenu>
             {navItems.map((item) => {
               const Icon = item.icon;

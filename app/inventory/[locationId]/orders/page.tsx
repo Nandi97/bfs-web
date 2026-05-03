@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import { OrdersFilterBar } from "@/components/inventory/orders/orders-filter-bar";
+import { getCurrentStaffAccess } from "@/lib/inventory-access";
 import type { OrderStatus } from "@/app/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
@@ -29,9 +30,8 @@ export default async function OrdersPage({
 }) {
   const { locationId } = await params;
   const { status = "all" } = await searchParams;
-
-  // TODO: replace false with hasSuperInventoryAccess(staffMemberId) when auth is wired
-  const isSuperInventory = false;
+  const access = await getCurrentStaffAccess();
+  const isSuperInventory = access?.isSuperInventory ?? false;
 
   const statusFilter =
     status !== "all" && VALID_STATUSES.includes(status as OrderStatus)

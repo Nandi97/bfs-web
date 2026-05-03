@@ -22,6 +22,7 @@ export function LocationSwitcher({
   currentLocationId,
 }: LocationSwitcherProps) {
   const router = useRouter();
+  const currentLocation = locations.find((location) => location.id === currentLocationId);
 
   const handleChange = (locationId: string | null) => {
     if (!locationId) return;
@@ -33,7 +34,7 @@ export function LocationSwitcher({
       <Building2 className="size-4 shrink-0 text-muted-foreground" />
       <Select value={currentLocationId} onValueChange={handleChange}>
         <SelectTrigger className="h-8 w-52 border-none bg-transparent shadow-none focus:ring-0 text-sm font-medium">
-          <SelectValue />
+          <SelectValue>{currentLocation?.name ?? "Select location"}</SelectValue>
         </SelectTrigger>
         <SelectContent>
           {locations.map((loc) => (

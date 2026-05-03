@@ -43,6 +43,9 @@ export function DashboardShell({
         <Header />
         <div className="flex flex-1 flex-col gap-4 p-4 md:px-6">
           <div className="flex flex-col gap-1">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-emerald-700/80 dark:text-emerald-300/75">
+              Live workspace
+            </p>
             <h1 className="text-2xl font-semibold tracking-tight">Operations</h1>
             <p className="text-sm text-muted-foreground">
               Thursday view across corporate stores, franchise stores, and service appointments.

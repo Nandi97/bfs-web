@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getCurrentStaffAccess } from "@/lib/inventory-access";
 import type { OrderStatus } from "@/app/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
@@ -15,9 +16,17 @@ export async function GET(
   const { locationId } = await params;
   const { searchParams } = new URL(req.url);
   const status = searchParams.get("status") ?? "all";
+  const access = await getCurrentStaffAccess();
 
-  // TODO: check isSuperInventory from session — when true, drop locationId filter
-  const isSuperInventory = false;
+  if (!access) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const isSuperInventory = access.isSuperInventory;
+
+  if (!isSuperInventory && !access.accessibleLocations.some((location) => location.id === locationId)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
 
   const statusFilter =
     status !== "all" && VALID_STATUSES.includes(status as OrderStatus)
