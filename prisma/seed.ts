@@ -7,9 +7,10 @@ const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is not set");
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
+const allowDestructiveSeed = process.env.ALLOW_DESTRUCTIVE_SEED === "true";
 
-async function main() {
-  // --- Clear (children before parents) ---
+async function clearExistingData() {
+  // Clear child tables before parent tables when an explicit reset is requested.
   await prisma.purchaseOrderItem.deleteMany();
   await prisma.purchaseOrder.deleteMany();
   await prisma.vendor.deleteMany();
@@ -25,6 +26,25 @@ async function main() {
   await prisma.unit.deleteMany();
   await prisma.department.deleteMany();
   await prisma.role.deleteMany();
+}
+
+async function main() {
+  const existingLocations = await prisma.storeLocation.count();
+
+  if (existingLocations > 0 && !allowDestructiveSeed) {
+    console.log(
+      `Seed skipped: found ${existingLocations} existing store locations. ` +
+      "Set ALLOW_DESTRUCTIVE_SEED=true to reset and reseed this database."
+    );
+    return;
+  }
+
+  if (allowDestructiveSeed) {
+    console.log("ALLOW_DESTRUCTIVE_SEED=true detected. Clearing existing data before reseeding.");
+    await clearExistingData();
+  } else {
+    console.log("Database is empty. Applying initial starter seed.");
+  }
 
   // ── Units of measure ─────────────────────────────────────────────────────
   // Starter list for cosmetics — extend via the admin UI as needed.

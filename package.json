@@ -8,9 +8,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "pnpm run db:setup && next start",
     "lint": "eslint",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:migrate": "prisma migrate deploy",
+    "db:setup": "pnpm run db:migrate && pnpm exec prisma db seed",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed:reset": "ALLOW_DESTRUCTIVE_SEED=true tsx prisma/seed.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
